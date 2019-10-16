@@ -113,8 +113,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
         //MenuBar options
         if(e.getSource() == boughtTruckItem){
             Auto auto = new Truck();
-            boughtOnDialog dialog = new boughtOnDialog(this, auto);
-            if(dialog.getCloseStatus() == boughtOnDialog.OK){
+            BoughtOnDialog dialog = new BoughtOnDialog(this, auto);
+            if(dialog.getCloseStatus() == BoughtOnDialog.OK){
                 DList.add(auto);
             }
         }
@@ -122,7 +122,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         if (soldItem == e.getSource()) {
             int index = jListArea.getSelectedRow();
             Auto unit = DList.remove(index);
-            soldOnDialog dialog = new soldOnDialog(this, unit);
+            SoldOnDialog dialog = new SoldOnDialog(this, unit);
             JOptionPane.showMessageDialog(null, " Cost:" + unit.getCost());
         }
     }
