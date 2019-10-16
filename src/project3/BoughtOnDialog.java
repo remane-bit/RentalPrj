@@ -9,14 +9,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class SoldOnDialog extends JDialog implements ActionListener {
+public class BoughtOnDialog extends JDialog implements ActionListener {
 
     private JTextField txtName;
     private JTextField txtDate;
+    private JTextField txtTrimPackage;
+    private JTextField txtFourbyFour;
     private JTextField txtCost;
-
     private JButton okButton;
     private JButton cancelButton;
+    private JComboBox<String> combobox;
     private int closeStatus;
     private Auto auto;
     static final int OK = 0;
@@ -30,7 +32,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
      @param auto an instantiated object to be filled with data
      *********************************************************/
 
-    public SoldOnDialog(JFrame parent, Auto auto) {
+    public BoughtOnDialog(JFrame parent, Auto auto) {
         // call parent and create a 'modal' dialog
         super(parent, true);
 
@@ -43,18 +45,35 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         // instantiate and display two text fields
-        txtName = new JTextField("Joe",30);
-        txtDate = new JTextField("10/17/2018",15);
-        txtCost = new JTextField("14000.00",15);
+        txtName = new JTextField("F150",30);
+        txtDate = new JTextField(15);
+        txtFourbyFour = new JTextField("True",15);
+        txtTrimPackage = new JTextField("LT",15);
+        txtCost = new JTextField("10100.00", 15);
 
+        String[] autoStrings = { "Truck", "Car" };
+
+        combobox = new JComboBox<>(autoStrings);
+        txtDate.setText("10/17/2018");
         JPanel textPanel = new JPanel();
-        textPanel.setLayout(new GridLayout(4,2));
-        textPanel.add(new JLabel("Name of Buyer: "));
+        textPanel.setLayout(new GridLayout(7,2));
+
+        textPanel.add(new JLabel(""));
+        textPanel.add(combobox);
+        textPanel.add(new JLabel(""));
+        textPanel.add(new JLabel(""));
+
+        textPanel.add(new JLabel("Name of Car: "));
         textPanel.add(txtName);
-        textPanel.add(new JLabel("Sold on Date: "));
+        textPanel.add(new JLabel("bought on Date: "));
         textPanel.add(txtDate);
-        textPanel.add(new JLabel("Sold for ($): "));
+        textPanel.add(new JLabel("Trim Package"));
+        textPanel.add(txtTrimPackage);
+        textPanel.add(new JLabel("Four by Four"));
+        textPanel.add(txtFourbyFour);
+        textPanel.add(new JLabel("Amount Paid for"));
         textPanel.add(txtCost);
+
         getContentPane().add(textPanel, BorderLayout.CENTER);
 
         // Instantiate and display two buttons
@@ -68,7 +87,6 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         cancelButton.addActionListener(this);
 
         setVisible (true);
-
     }
 
     /**************************************************************
@@ -86,18 +104,44 @@ public class SoldOnDialog extends JDialog implements ActionListener {
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
 
-            Date d = null;
-            try {
-                d = df.parse(txtDate.getText());
-                temp.setTime(d);
+            if (combobox.getSelectedIndex() == 1) {
+                Date d = null;
+                try {
+                    d = df.parse(txtDate.getText());
+                    temp.setTime(d);
 
-            } catch (ParseException e1) {
+                } catch (ParseException e1) {
 //                  Do some thing good, what I am not sure.
+                }
+                auto.setBoughtOn(temp);
+                auto.setAutoName(txtName.getText());
+                ((Car) auto).setTrim(txtTrimPackage.getText());
+                auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
+
             }
-            auto.setNameOfBuyer(txtName.getText());
-            auto.setSoldOn(temp);
-            auto.setSoldPrice(Double.parseDouble(txtCost.getText()));
+
+            else {
+                Date d = null;
+                try {
+                    d = df.parse(txtDate.getText());
+                    temp.setTime(d);
+
+                } catch (ParseException e1) {
+//                  Do some thing good, what I am not sure.
+                }
+
+                auto.setBoughtOn(temp);
+                auto.setAutoName(txtName.getText());
+                auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
+                ((Truck) auto).setTrim(txtTrimPackage.getText());
+
+                if (txtFourbyFour.getText().equalsIgnoreCase("true"))
+                    ((Truck) auto).setFourByFour(true);
+                else
+                    ((Truck) auto).setFourByFour(false);
+            }
         }
+
         // make the dialog disappear
         dispose();
     }
@@ -111,5 +155,4 @@ public class SoldOnDialog extends JDialog implements ActionListener {
     public int getCloseStatus(){
         return closeStatus;
     }
-
 }
