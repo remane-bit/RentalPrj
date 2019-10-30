@@ -11,8 +11,10 @@ import java.util.GregorianCalendar;
 
 public class BoughtOnDialog extends JDialog implements ActionListener {
 
-    private JTextField txtName;
+    private JTextField txtTruckName;
+    private JTextField txtCarName;
     private JTextField txtDate;
+    private JTextField txtTurbo;
     private JTextField txtTrimPackage;
     private JTextField txtFourbyFour;
     private JTextField txtCost;
@@ -37,7 +39,7 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
         super(parent, true);
 
         this.auto = auto;
-        setTitle("Sold to dialog box");
+        setTitle("Bought Truck or Car");
         closeStatus = CANCEL;
         setSize(400,200);
 
@@ -45,34 +47,21 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         // instantiate and display two text fields
-        txtName = new JTextField("F150",30);
+        txtTruckName = new JTextField("F150",30);
+        txtCarName = new JTextField("Honda Civic",30);
         txtDate = new JTextField(15);
         txtFourbyFour = new JTextField("True",15);
         txtTrimPackage = new JTextField("LT",15);
         txtCost = new JTextField("10100.00", 15);
+        txtTurbo = new JTextField("Turbo", 15);
 
-        String[] autoStrings = { "Truck", "Car" };
+
+        String[] autoStrings = { "Car", "Truck" };
 
         combobox = new JComboBox<>(autoStrings);
         txtDate.setText("10/17/2018");
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new GridLayout(7,2));
-
-        textPanel.add(new JLabel(""));
-        textPanel.add(combobox);
-        textPanel.add(new JLabel(""));
-        textPanel.add(new JLabel(""));
-
-        textPanel.add(new JLabel("Name of Car: "));
-        textPanel.add(txtName);
-        textPanel.add(new JLabel("bought on Date: "));
-        textPanel.add(txtDate);
-        textPanel.add(new JLabel("Trim Package"));
-        textPanel.add(txtTrimPackage);
-        textPanel.add(new JLabel("Four by Four"));
-        textPanel.add(txtFourbyFour);
-        textPanel.add(new JLabel("Amount Paid for"));
-        textPanel.add(txtCost);
 
         getContentPane().add(textPanel, BorderLayout.CENTER);
 
@@ -85,6 +74,48 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
+
+        if (combobox.getSelectedIndex() == 0){
+            textPanel.removeAll();
+            textPanel.updateUI();
+
+            textPanel.add(new JLabel(""));
+            textPanel.add(combobox);
+            textPanel.add(new JLabel(""));
+            textPanel.add(new JLabel(""));
+
+            textPanel.add(new JLabel("Name of Car: "));
+            textPanel.add(txtCarName);
+            textPanel.add(new JLabel("bought on Date: "));
+            textPanel.add(txtDate);
+            textPanel.add(new JLabel("Trim Package"));
+            textPanel.add(txtTrimPackage);
+            textPanel.add(new JLabel("Turbo"));
+            textPanel.add(txtTurbo);
+            textPanel.add(new JLabel("Amount Paid for"));
+            textPanel.add(txtCost);
+        }
+
+        if (combobox.getSelectedIndex() == 1){
+            textPanel.removeAll();
+            textPanel.updateUI();
+
+            textPanel.add(new JLabel(""));
+            textPanel.add(combobox);
+            textPanel.add(new JLabel(""));
+            textPanel.add(new JLabel(""));
+
+            textPanel.add(new JLabel("Name of Truck: "));
+            textPanel.add(txtTruckName);
+            textPanel.add(new JLabel("bought on Date: "));
+            textPanel.add(txtDate);
+            textPanel.add(new JLabel("Trim Package"));
+            textPanel.add(txtTrimPackage);
+            textPanel.add(new JLabel("Four by Four"));
+            textPanel.add(txtFourbyFour);
+            textPanel.add(new JLabel("Amount Paid for"));
+            textPanel.add(txtCost);
+        }
 
         setVisible (true);
     }
@@ -114,7 +145,7 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
 //                  Do some thing good, what I am not sure.
                 }
                 auto.setBoughtOn(temp);
-                auto.setAutoName(txtName.getText());
+                auto.setAutoName(txtCarName.getText());
                 ((Car) auto).setTrim(txtTrimPackage.getText());
                 auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
 
@@ -131,7 +162,7 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
                 }
 
                 auto.setBoughtOn(temp);
-                auto.setAutoName(txtName.getText());
+                auto.setAutoName(txtTruckName.getText());
                 auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
                 ((Truck) auto).setTrim(txtTrimPackage.getText());
 

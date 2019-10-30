@@ -25,7 +25,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
     private JMenuItem saveSerItem;
     private JMenuItem saveTextItem;
     private JMenuItem boughtCarItem;
-    private JMenuItem boughtTruckItem;
+    private JMenuItem boughtTruckCarItem;
 
     private JMenuItem soldItem;
 
@@ -52,7 +52,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         openSerItem = new JMenuItem("Open File");
         exitItem = new JMenuItem("Exit");
         saveSerItem = new JMenuItem("Save File");
-        boughtTruckItem = new JMenuItem("Bought a Truck");
+        boughtTruckCarItem = new JMenuItem("Bought Truck or Car");
 
         soldItem = new JMenuItem("Sold Car or Truck");
 
@@ -60,7 +60,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         fileMenu.add(openSerItem);
         fileMenu.add(saveSerItem);
         fileMenu.add(exitItem);
-        actionMenu.add(boughtTruckItem);
+        actionMenu.add(boughtTruckCarItem);
 
         actionMenu.add(soldItem);
 
@@ -71,7 +71,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         openSerItem.addActionListener(this);
         saveSerItem.addActionListener(this);
         exitItem.addActionListener(this);
-        boughtTruckItem.addActionListener(this);
+        boughtTruckCarItem.addActionListener(this);
         soldItem.addActionListener(this);
 
         setJMenuBar(menus);
@@ -111,7 +111,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         }
 
         //MenuBar options
-        if(e.getSource() == boughtTruckItem){
+        if(e.getSource() == boughtTruckCarItem){
             Auto auto = new Truck();
             BoughtOnDialog dialog = new BoughtOnDialog(this, auto);
             if(dialog.getCloseStatus() == BoughtOnDialog.OK){
