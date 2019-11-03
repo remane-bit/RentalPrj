@@ -52,7 +52,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         openSerItem = new JMenuItem("Open File");
         exitItem = new JMenuItem("Exit");
         saveSerItem = new JMenuItem("Save File");
-        boughtTruckCarItem = new JMenuItem("Bought Truck or Car");
+        boughtTruckCarItem = new JMenuItem("Bought Car or Truck");
 
         soldItem = new JMenuItem("Sold Car or Truck");
 

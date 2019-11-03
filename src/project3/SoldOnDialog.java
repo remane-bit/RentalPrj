@@ -14,6 +14,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
     private JTextField txtName;
     private JTextField txtDate;
     private JTextField txtCost;
+    private JTextField txtVehicleSold;
 
     private JButton okButton;
     private JButton cancelButton;
@@ -46,6 +47,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         txtName = new JTextField("Joe",30);
         txtDate = new JTextField("10/17/2018",15);
         txtCost = new JTextField("14000.00",15);
+        txtVehicleSold = new JTextField("F150", 30);
 
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new GridLayout(4,2));
@@ -55,6 +57,8 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         textPanel.add(txtDate);
         textPanel.add(new JLabel("Sold for ($): "));
         textPanel.add(txtCost);
+        textPanel.add(new JLabel("Model: "));
+        textPanel.add(txtVehicleSold);
         getContentPane().add(textPanel, BorderLayout.CENTER);
 
         // Instantiate and display two buttons

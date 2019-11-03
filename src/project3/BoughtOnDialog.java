@@ -39,7 +39,7 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
         super(parent, true);
 
         this.auto = auto;
-        setTitle("Bought Truck or Car");
+        setTitle("Bought Car or Truck");
         closeStatus = CANCEL;
         setSize(400,200);
 
