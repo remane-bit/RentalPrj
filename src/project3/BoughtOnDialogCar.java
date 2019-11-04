@@ -67,10 +67,6 @@ public class BoughtOnDialogCar extends JDialog implements ActionListener {
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
-        carPanel.add(new JLabel(""));
-        carPanel.add(new JLabel(""));
-        carPanel.add(new JLabel(""));
-
         carPanel.add(new JLabel("Name of Car: "));
         carPanel.add(txtCarName);
         carPanel.add(new JLabel("bought on Date: "));

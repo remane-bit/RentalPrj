@@ -68,23 +68,19 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
-            truckPanel.removeAll();
-            truckPanel.updateUI();
+        truckPanel.removeAll();
+        truckPanel.updateUI();
 
-            truckPanel.add(new JLabel(""));
-            truckPanel.add(new JLabel(""));
-            truckPanel.add(new JLabel(""));
-
-            truckPanel.add(new JLabel("Name of Truck: "));
-            truckPanel.add(txtTruckName);
-            truckPanel.add(new JLabel("bought on Date: "));
-            truckPanel.add(txtDate);
-            truckPanel.add(new JLabel("Trim Package"));
-            truckPanel.add(txtTrimPackage);
-            truckPanel.add(new JLabel("Four by Four"));
-            truckPanel.add(txtFourbyFour);
-            truckPanel.add(new JLabel("Amount Paid for"));
-            truckPanel.add(txtCost);
+        truckPanel.add(new JLabel("Name of Truck: "));
+        truckPanel.add(txtTruckName);
+        truckPanel.add(new JLabel("bought on Date: "));
+        truckPanel.add(txtDate);
+        truckPanel.add(new JLabel("Trim Package"));
+        truckPanel.add(txtTrimPackage);
+        truckPanel.add(new JLabel("Four by Four"));
+        truckPanel.add(txtFourbyFour);
+        truckPanel.add(new JLabel("Amount Paid for"));
+        truckPanel.add(txtCost);
 
         setVisible (true);
     }
