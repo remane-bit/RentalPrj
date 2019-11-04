@@ -9,22 +9,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class BoughtOnDialog extends JDialog implements ActionListener {
+public class BoughtOnDialogTruck extends JDialog implements ActionListener {
 
     private JTextField txtTruckName;
-    private JTextField txtCarName;
     private JTextField txtDate;
-    private JTextField txtTurbo;
     private JTextField txtTrimPackage;
     private JTextField txtFourbyFour;
     private JTextField txtCost;
     private JButton okButton;
     private JButton cancelButton;
-    private JComboBox<String> combobox;
     private int closeStatus;
     private Auto auto;
     static final int OK = 0;
     static final int CANCEL = 1;
+    JPanel truckPanel = new JPanel();
 
     /*********************************************************
      Instantiate a Custom Dialog as 'modal' and wait for the
@@ -34,12 +32,12 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
      @param auto an instantiated object to be filled with data
      *********************************************************/
 
-    public BoughtOnDialog(JFrame parent, Auto auto) {
+    public BoughtOnDialogTruck(JFrame parent, Auto auto) {
         // call parent and create a 'modal' dialog
         super(parent, true);
 
         this.auto = auto;
-        setTitle("Bought Car or Truck");
+        setTitle("Bought Truck");
         closeStatus = CANCEL;
         setSize(400,200);
 
@@ -48,22 +46,17 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
 
         // instantiate and display two text fields
         txtTruckName = new JTextField("F150",30);
-        txtCarName = new JTextField("Honda Civic",30);
         txtDate = new JTextField(15);
         txtFourbyFour = new JTextField("True",15);
         txtTrimPackage = new JTextField("LT",15);
         txtCost = new JTextField("10100.00", 15);
-        txtTurbo = new JTextField("Turbo", 15);
 
-
-        String[] autoStrings = { "Car", "Truck" };
-
-        combobox = new JComboBox<>(autoStrings);
+        // Change Me
         txtDate.setText("10/17/2018");
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new GridLayout(7,2));
 
-        getContentPane().add(textPanel, BorderLayout.CENTER);
+        truckPanel.setLayout(new GridLayout(7,2));
+
+        getContentPane().add(truckPanel, BorderLayout.CENTER);
 
         // Instantiate and display two buttons
         okButton = new JButton("OK");
@@ -75,47 +68,23 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
-        if (combobox.getSelectedIndex() == 0){
-            textPanel.removeAll();
-            textPanel.updateUI();
+            truckPanel.removeAll();
+            truckPanel.updateUI();
 
-            textPanel.add(new JLabel(""));
-            textPanel.add(combobox);
-            textPanel.add(new JLabel(""));
-            textPanel.add(new JLabel(""));
+            truckPanel.add(new JLabel(""));
+            truckPanel.add(new JLabel(""));
+            truckPanel.add(new JLabel(""));
 
-            textPanel.add(new JLabel("Name of Car: "));
-            textPanel.add(txtCarName);
-            textPanel.add(new JLabel("bought on Date: "));
-            textPanel.add(txtDate);
-            textPanel.add(new JLabel("Trim Package"));
-            textPanel.add(txtTrimPackage);
-            textPanel.add(new JLabel("Turbo"));
-            textPanel.add(txtTurbo);
-            textPanel.add(new JLabel("Amount Paid for"));
-            textPanel.add(txtCost);
-        }
-
-        if (combobox.getSelectedIndex() == 1){
-            textPanel.removeAll();
-            textPanel.updateUI();
-
-            textPanel.add(new JLabel(""));
-            textPanel.add(combobox);
-            textPanel.add(new JLabel(""));
-            textPanel.add(new JLabel(""));
-
-            textPanel.add(new JLabel("Name of Truck: "));
-            textPanel.add(txtTruckName);
-            textPanel.add(new JLabel("bought on Date: "));
-            textPanel.add(txtDate);
-            textPanel.add(new JLabel("Trim Package"));
-            textPanel.add(txtTrimPackage);
-            textPanel.add(new JLabel("Four by Four"));
-            textPanel.add(txtFourbyFour);
-            textPanel.add(new JLabel("Amount Paid for"));
-            textPanel.add(txtCost);
-        }
+            truckPanel.add(new JLabel("Name of Truck: "));
+            truckPanel.add(txtTruckName);
+            truckPanel.add(new JLabel("bought on Date: "));
+            truckPanel.add(txtDate);
+            truckPanel.add(new JLabel("Trim Package"));
+            truckPanel.add(txtTrimPackage);
+            truckPanel.add(new JLabel("Four by Four"));
+            truckPanel.add(txtFourbyFour);
+            truckPanel.add(new JLabel("Amount Paid for"));
+            truckPanel.add(txtCost);
 
         setVisible (true);
     }
@@ -126,33 +95,18 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
      **************************************************************/
     public void actionPerformed(ActionEvent e) {
 
-        JButton button = (JButton) e.getSource();
+        //JButton button = (JButton) e.getSource();
+        Object source = e.getSource();
 
         // if OK clicked the fill the object
-        if (button == okButton) {
+        if (source == okButton) {
             // save the information in the object
             closeStatus = OK;
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
 
-            if (combobox.getSelectedIndex() == 1) {
-                Date d = null;
-                try {
-                    d = df.parse(txtDate.getText());
-                    temp.setTime(d);
+            Date d = null;
 
-                } catch (ParseException e1) {
-//                  Do some thing good, what I am not sure.
-                }
-                auto.setBoughtOn(temp);
-                auto.setAutoName(txtCarName.getText());
-                ((Car) auto).setTrim(txtTrimPackage.getText());
-                auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
-
-            }
-
-            else {
-                Date d = null;
                 try {
                     d = df.parse(txtDate.getText());
                     temp.setTime(d);
@@ -170,7 +124,7 @@ public class BoughtOnDialog extends JDialog implements ActionListener {
                     ((Truck) auto).setFourByFour(true);
                 else
                     ((Truck) auto).setFourByFour(false);
-            }
+
         }
 
         // make the dialog disappear

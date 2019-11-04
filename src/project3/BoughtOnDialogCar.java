@@ -9,19 +9,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class SoldOnDialog extends JDialog implements ActionListener {
+public class BoughtOnDialogCar extends JDialog implements ActionListener {
 
-    private JTextField txtName;
+    private JTextField txtCarName;
     private JTextField txtDate;
+    private JTextField txtTurbo;
+    private JTextField txtTrimPackage;
     private JTextField txtCost;
-    private JTextField txtVehicleSold;
-
     private JButton okButton;
     private JButton cancelButton;
     private int closeStatus;
     private Auto auto;
     static final int OK = 0;
     static final int CANCEL = 1;
+    JPanel carPanel = new JPanel();
 
     /*********************************************************
      Instantiate a Custom Dialog as 'modal' and wait for the
@@ -31,12 +32,12 @@ public class SoldOnDialog extends JDialog implements ActionListener {
      @param auto an instantiated object to be filled with data
      *********************************************************/
 
-    public SoldOnDialog(JFrame parent, Auto auto) {
+    public BoughtOnDialogCar(JFrame parent, Auto auto) {
         // call parent and create a 'modal' dialog
         super(parent, true);
 
         this.auto = auto;
-        setTitle("Sold to dialog box");
+        setTitle("Bought Car");
         closeStatus = CANCEL;
         setSize(400,200);
 
@@ -44,22 +45,17 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         // instantiate and display two text fields
-        txtName = new JTextField("Joe",30);
-        txtDate = new JTextField("10/17/2018",15);
-        txtCost = new JTextField("14000.00",15);
-        txtVehicleSold = new JTextField("F150", 30);
+        txtCarName = new JTextField("Honda Civic",30);
+        txtDate = new JTextField(15);
+        txtTrimPackage = new JTextField("LT",15);
+        txtCost = new JTextField("10100.00", 15);
+        txtTurbo = new JTextField("Turbo", 15);
 
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new GridLayout(4,2));
-        textPanel.add(new JLabel("Name of Buyer: "));
-        textPanel.add(txtName);
-        textPanel.add(new JLabel("Sold on Date: "));
-        textPanel.add(txtDate);
-        textPanel.add(new JLabel("Sold for ($): "));
-        textPanel.add(txtCost);
-        textPanel.add(new JLabel("Model: "));
-        textPanel.add(txtVehicleSold);
-        getContentPane().add(textPanel, BorderLayout.CENTER);
+        txtDate.setText("10/17/2018");
+
+        carPanel.setLayout(new GridLayout(7,2));
+
+        getContentPane().add(carPanel, BorderLayout.CENTER);
 
         // Instantiate and display two buttons
         okButton = new JButton("OK");
@@ -71,8 +67,22 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
-        setVisible (true);
+        carPanel.add(new JLabel(""));
+        carPanel.add(new JLabel(""));
+        carPanel.add(new JLabel(""));
 
+        carPanel.add(new JLabel("Name of Car: "));
+        carPanel.add(txtCarName);
+        carPanel.add(new JLabel("bought on Date: "));
+        carPanel.add(txtDate);
+        carPanel.add(new JLabel("Trim Package"));
+        carPanel.add(txtTrimPackage);
+        carPanel.add(new JLabel("Turbo"));
+        carPanel.add(txtTurbo);
+        carPanel.add(new JLabel("Amount Paid for"));
+        carPanel.add(txtCost);
+
+        setVisible (true);
     }
 
     /**************************************************************
@@ -81,29 +91,37 @@ public class SoldOnDialog extends JDialog implements ActionListener {
      **************************************************************/
     public void actionPerformed(ActionEvent e) {
 
-        JButton button = (JButton) e.getSource();
+        //JButton button = (JButton) e.getSource();
+        Object source = e.getSource();
+
+       // System.out.println(combobox.getSelectedIndex());
 
         // if OK clicked the fill the object
-        if (button == okButton) {
+        if (source == okButton) {
             // save the information in the object
             closeStatus = OK;
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
 
-            Date d = null;
-            try {
-                d = df.parse(txtDate.getText());
-                temp.setTime(d);
 
-            } catch (ParseException e1) {
+                Date d = null;
+                try {
+                    d = df.parse(txtDate.getText());
+                    temp.setTime(d);
+
+                } catch (ParseException e1) {
 //                  Do some thing good, what I am not sure.
-            }
-            auto.setNameOfBuyer(txtName.getText());
-            auto.setSoldOn(temp);
-            auto.setSoldPrice(Double.parseDouble(txtCost.getText()));
-            auto.setAutoName(txtVehicleSold.getText());
-        }
-        // make the dialog disappear
+                }
+                auto.setBoughtOn(temp);
+                auto.setAutoName(txtCarName.getText());
+                ((Car) auto).setTrim(txtTrimPackage.getText());
+                auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
+
+
+
+         }
+
+         // make the dialog disappear
         dispose();
     }
 
@@ -116,5 +134,4 @@ public class SoldOnDialog extends JDialog implements ActionListener {
     public int getCloseStatus(){
         return closeStatus;
     }
-
 }

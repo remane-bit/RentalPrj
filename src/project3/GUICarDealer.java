@@ -25,7 +25,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
     private JMenuItem saveSerItem;
     private JMenuItem saveTextItem;
     private JMenuItem boughtCarItem;
-    private JMenuItem boughtTruckCarItem;
+    private JMenuItem boughtTruckItem;
 
     private JMenuItem soldItem;
 
@@ -52,7 +52,9 @@ public class GUICarDealer extends JFrame implements ActionListener{
         openSerItem = new JMenuItem("Open File");
         exitItem = new JMenuItem("Exit");
         saveSerItem = new JMenuItem("Save File");
-        boughtTruckCarItem = new JMenuItem("Bought Car or Truck");
+        boughtCarItem = new JMenuItem("Bought Car");
+        boughtTruckItem = new JMenuItem("Bought Truck");
+
 
         soldItem = new JMenuItem("Sold Car or Truck");
 
@@ -60,7 +62,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
         fileMenu.add(openSerItem);
         fileMenu.add(saveSerItem);
         fileMenu.add(exitItem);
-        actionMenu.add(boughtTruckCarItem);
+        actionMenu.add(boughtCarItem);
+        actionMenu.add(boughtTruckItem);
 
         actionMenu.add(soldItem);
 
@@ -71,7 +74,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
         openSerItem.addActionListener(this);
         saveSerItem.addActionListener(this);
         exitItem.addActionListener(this);
-        boughtTruckCarItem.addActionListener(this);
+        boughtCarItem.addActionListener(this);
+        boughtTruckItem.addActionListener(this);
         soldItem.addActionListener(this);
 
         setJMenuBar(menus);
@@ -111,10 +115,18 @@ public class GUICarDealer extends JFrame implements ActionListener{
         }
 
         //MenuBar options
-        if(e.getSource() == boughtTruckCarItem){
+        if(e.getSource() == boughtCarItem){
+            Auto auto = new Car();
+            BoughtOnDialogCar dialog = new BoughtOnDialogCar(this, auto);
+            if(dialog.getCloseStatus() == BoughtOnDialogCar.OK){
+                DList.add(auto);
+            }
+        }
+
+        if(e.getSource() == boughtTruckItem){
             Auto auto = new Truck();
-            BoughtOnDialog dialog = new BoughtOnDialog(this, auto);
-            if(dialog.getCloseStatus() == BoughtOnDialog.OK){
+            BoughtOnDialogTruck dialog = new BoughtOnDialogTruck(this, auto);
+            if(dialog.getCloseStatus() == BoughtOnDialogTruck.OK){
                 DList.add(auto);
             }
         }
