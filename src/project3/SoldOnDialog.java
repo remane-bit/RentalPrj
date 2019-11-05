@@ -71,7 +71,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
-        setVisible (true);
+        setVisible(true);
 
     }
 
@@ -98,6 +98,12 @@ public class SoldOnDialog extends JDialog implements ActionListener {
             } catch (ParseException e1) {
 //                  Do some thing good, what I am not sure.
             }
+
+            System.out.println(txtName.getText());
+            System.out.println(temp);
+            System.out.println(Double.parseDouble(txtCost.getText()));
+            System.out.println(txtVehicleSold.getText());
+
             auto.setNameOfBuyer(txtName.getText());
             auto.setSoldOn(temp);
             auto.setSoldPrice(Double.parseDouble(txtCost.getText()));

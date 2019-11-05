@@ -42,6 +42,10 @@ public class GUICarDealer extends JFrame implements ActionListener{
     /** Scroll pane */
     //private JScrollPane scrollList;
 
+    /** Test button **/
+    private JButton button;
+
+
     /*****************************************************************
      *
      * A constructor that starts a new GUI1024 for the rental store
@@ -64,51 +68,9 @@ public class GUICarDealer extends JFrame implements ActionListener{
         daysOverDueItem = new JMenuItem("30 Days overDue Screen");
         soldItem = new JMenuItem("Sold Car or Truck");
 
-        //adding items to bar
-        fileMenu.add(openSerItem);
-        fileMenu.add(saveSerItem);
-        fileMenu.add(openTextItem);
-        fileMenu.add(saveTextItem);
-        fileMenu.add(exitItem);
-        fileMenu.add(boughtScreenItem);
-        fileMenu.add(soldScreenItem);
-        fileMenu.add(daysOverDueItem);
+       // button = new JButton("test");
 
-        actionMenu.add(boughtCarItem);
-        actionMenu.add(boughtTruckItem);
-        actionMenu.add(soldItem);
-
-        menus.add(fileMenu);
-        menus.add(actionMenu);
-
-        //adding actionListener
-        openSerItem.addActionListener(this);
-        saveSerItem.addActionListener(this);
-        openTextItem.addActionListener(this);
-        saveTextItem.addActionListener(this);
-        exitItem.addActionListener(this);
-        boughtScreenItem.addActionListener(this);
-        soldScreenItem.addActionListener(this);
-        daysOverDueItem.addActionListener(this);
-
-        boughtCarItem.addActionListener(this);
-        boughtTruckItem.addActionListener(this);
-        soldItem.addActionListener(this);
-
-        setJMenuBar(menus);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        panel = new JPanel();
-        DList = new ListEngine();
-        jListArea = new JTable(DList);
-        JScrollPane scrollList = new JScrollPane(jListArea);
-        scrollList.setPreferredSize(new Dimension(800,300));
-        panel.add(scrollList);
-
-        add(panel, BorderLayout.CENTER);
-
-        setVisible(true);
-        setSize(950,450);
+        boughtScreen();
     }
 
     /*****************************************************************
@@ -164,21 +126,109 @@ public class GUICarDealer extends JFrame implements ActionListener{
         }
 
         if(comp == boughtScreenItem) {
-            //Do something
+            dispose();
+            boughtScreen();
+
+
             ;
         }
 
         if(comp == soldScreenItem) {
             //Do something
+            dispose();
+            soldScreen();
             ;
         }
 
         if(comp == daysOverDueItem) {
             //Do something
+            dispose();
+            daysOverDueScreen();
             ;
         }
 
     }
+
+    public void boughtScreen() {
+
+        menuBar();
+
+        panel = new JPanel();
+        DList = new ListEngine();
+        jListArea = new JTable(DList);
+        JScrollPane scrollList = new JScrollPane(jListArea);
+        scrollList.setPreferredSize(new Dimension(800,300));
+        panel.add(scrollList);
+
+        add(panel, BorderLayout.CENTER);
+
+        setVisible(true);
+        setSize(950,450);
+    }
+
+    public void soldScreen() {
+        menuBar();
+
+        panel = new JPanel();
+        //Add in list engine and other things
+       // add(button);
+        add(panel, BorderLayout.CENTER);
+
+        setVisible(true);
+        setSize(950,450);
+    }
+
+    public void daysOverDueScreen() {
+        menuBar();
+
+        panel = new JPanel();
+        //Add in list engine and other things
+        //add(button);
+        add(panel, BorderLayout.CENTER);
+
+        setVisible(true);
+        setSize(950,450);
+    }
+
+
+    public void menuBar() {
+        fileMenu.add(openSerItem);
+        fileMenu.add(saveSerItem);
+        fileMenu.add(openTextItem);
+        fileMenu.add(saveTextItem);
+        fileMenu.add(exitItem);
+        fileMenu.add(boughtScreenItem);
+        fileMenu.add(soldScreenItem);
+        fileMenu.add(daysOverDueItem);
+
+        actionMenu.add(boughtCarItem);
+        actionMenu.add(boughtTruckItem);
+        actionMenu.add(soldItem);
+
+        menus.add(fileMenu);
+        menus.add(actionMenu);
+
+        //adding actionListener
+        openSerItem.addActionListener(this);
+        saveSerItem.addActionListener(this);
+        openTextItem.addActionListener(this);
+        saveTextItem.addActionListener(this);
+        exitItem.addActionListener(this);
+        boughtScreenItem.addActionListener(this);
+        soldScreenItem.addActionListener(this);
+        daysOverDueItem.addActionListener(this);
+
+        boughtCarItem.addActionListener(this);
+        boughtTruckItem.addActionListener(this);
+        soldItem.addActionListener(this);
+
+        setJMenuBar(menus);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    }
+
+
 
 
     public static void main(String[] args) {
