@@ -111,9 +111,16 @@ public class GUICarDealer extends JFrame implements ActionListener{
         }
 
         if (comp == soldItem) {
+            //The selected index does work, prints out the respective row as selected.
             int index = jListArea.getSelectedRow();
+
+            //But this never gets removed!!
             Auto unit = DList.remove(index);
+
+            //Gets to here before error
             SoldOnDialog dialog = new SoldOnDialog(this, unit);
+
+            //Then here when it gets cancelled
             JOptionPane.showMessageDialog(null, " Cost:" + unit.getCost());
         }
 

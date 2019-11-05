@@ -7,8 +7,7 @@ public abstract class Auto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     protected GregorianCalendar boughtOn;
-//    protected GregorianCalendar soldOn;
-    protected String soldOn;
+    protected GregorianCalendar soldOn;
     protected String autoName;
     protected String nameOfBuyer;
     protected double boughtCost;
@@ -38,11 +37,11 @@ public abstract class Auto implements Serializable {
         this.boughtOn = boughtOn;
     }
 
-    public String getSoldOn() {
+    public GregorianCalendar getSoldOn() {
         return soldOn;
     }
 
-    public void setSoldOn(String soldOn) {
+    public void setSoldOn(GregorianCalendar soldOn) {
         this.soldOn = soldOn;
     }
 
