@@ -32,8 +32,9 @@ public class ListEngine extends AbstractTableModel {
         createList();
     }
 
-    public Auto remove(int i) {
-        return null;
+    public void remove(int i) {
+        listAutos.remove(i);
+        fireTableDataChanged();
     }
 
     public void add(Auto a) {

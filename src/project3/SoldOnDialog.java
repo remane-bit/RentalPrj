@@ -72,6 +72,8 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
+        txtVehicleSold.setText(auto.getAutoName());
+
         setVisible(true);
 
     }

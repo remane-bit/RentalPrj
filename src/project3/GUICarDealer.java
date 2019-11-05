@@ -129,48 +129,50 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
             Object check = "";
 
-            //But this never gets removed!!
             //Create the unit to have all the details of that selected unit then remove it?
             Auto unitTruck = new Truck();
             Auto unitCar = new Car();
             double paidPrice = 0.0;
             String paidprice = "";
 
-            if(check == jListArea.getValueAt(index, 4) ) {
+                        if(check == jListArea.getValueAt(index, 4) ) {
 
-                System.out.println("I'm a car");
+                            System.out.println("I'm a car");
 
-                unitCar.setAutoName((jListArea.getValueAt(index, 0).toString()));
-                paidprice = ((jListArea.getValueAt(index, 1).toString()));
-                paidPrice = Double.parseDouble(paidprice);
-                unitCar.setBoughtCost(paidPrice);
+                            unitCar.setAutoName((jListArea.getValueAt(index, 0).toString()));
+                            paidprice = ((jListArea.getValueAt(index, 1).toString()));
+                            paidPrice = Double.parseDouble(paidprice);
+                            unitCar.setBoughtCost(paidPrice);
 
-                System.out.println(unitCar.getAutoName());
-                System.out.println(unitCar.getBoughtCost());
-            }
+                            System.out.println(unitCar.getAutoName());
+                            System.out.println(unitCar.getBoughtCost());
+                        }
 
-            else /** If its a truck **/ {
+                        else /** If its a truck **/ {
 
-                System.out.println("I'm a truck");
+                            System.out.println("I'm a truck");
 
-                unitTruck.setAutoName((jListArea.getValueAt(index, 0).toString()));
-                paidprice = ((jListArea.getValueAt(index, 1).toString()));
-                paidPrice = Double.parseDouble(paidprice);
-                unitTruck.setBoughtCost(paidPrice);
+                            unitTruck.setAutoName((jListArea.getValueAt(index, 0).toString()));
+                            paidprice = ((jListArea.getValueAt(index, 1).toString()));
+                            paidPrice = Double.parseDouble(paidprice);
+                            unitTruck.setBoughtCost(paidPrice);
 
-                System.out.println(unitCar.getAutoName());
-                System.out.println(unitCar.getBoughtCost());
+                            System.out.println(unitTruck.getAutoName());
+                            System.out.println(unitTruck.getBoughtCost());
 
-                //unit = unitTruck;
-            }
+                            //unit = unitTruck;
+                        }
 
             //Original line of code
-            Auto unit = DList.remove(index);
+            Auto unit;
+
+            //Does not get removed
+//            DList.remove(unit);
 
             if(check == jListArea.getValueAt(index, 4) ) unit = unitCar;
             else unit = unitTruck;
 
-
+            DList.remove(index);
 
             //Gets to here before error
             SoldOnDialog dialog = new SoldOnDialog(this, unit);
