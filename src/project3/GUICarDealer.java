@@ -171,11 +171,9 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
             if(check == jListArea.getValueAt(index, 4) ) unit = unitCar;
             else unit = unitTruck;
-
-            DList.remove(index);
-
-            //Gets to here before error
+//            DList.remove(index);
             SoldOnDialog dialog = new SoldOnDialog(this, unit);
+            DList.remove(index);
         }
 
         if(comp == openTextItem) {
@@ -205,25 +203,25 @@ public class GUICarDealer extends JFrame implements ActionListener{
         }
 
         if(comp == boughtScreenItem) {
-            dispose();
+            panel.removeAll();
             boughtScreen();
 
 
-            ;
+
         }
 
         if(comp == soldScreenItem) {
             //Do something
-            dispose();
+            panel.removeAll();
             soldScreen();
-            ;
+
         }
 
         if(comp == daysOverDueItem) {
             //Do something
-            dispose();
+            panel.removeAll();
             daysOverDueScreen();
-            ;
+
         }
 
     }
@@ -255,6 +253,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         setVisible(true);
         setSize(950,450);
+        setVisible(true);
     }
 
     public void daysOverDueScreen() {
@@ -267,10 +266,12 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         setVisible(true);
         setSize(950,450);
+        setVisible(true);
     }
 
 
     public void menuBar() {
+
         fileMenu.add(openSerItem);
         fileMenu.add(saveSerItem);
         fileMenu.add(openTextItem);

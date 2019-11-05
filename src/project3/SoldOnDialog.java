@@ -74,6 +74,12 @@ public class SoldOnDialog extends JDialog implements ActionListener {
 
         txtVehicleSold.setText(auto.getAutoName());
 
+        Date date = GregorianCalendar.getInstance().getTime();
+        SimpleDateFormat dateF = new SimpleDateFormat("MM/dd/yyyy");
+        String todayDate = dateF.format(date);
+
+        txtDate.setText(todayDate);
+
         setVisible(true);
 
     }
