@@ -114,8 +114,50 @@ public class GUICarDealer extends JFrame implements ActionListener{
             //The selected index does work, prints out the respective row as selected.
             int index = jListArea.getSelectedRow();
 
+            Object check = "";
+
             //But this never gets removed!!
+            //Create the unit to have all the details of that selected unit then remove it?
+            Auto unitTruck = new Truck();
+            Auto unitCar = new Car();
+            double paidPrice = 0.0;
+            String paidprice = "";
+
+            if(check == jListArea.getValueAt(index, 4) ) {
+
+                System.out.println("I'm a car");
+
+                unitCar.setAutoName((jListArea.getValueAt(index, 0).toString()));
+                paidprice = ((jListArea.getValueAt(index, 1).toString()));
+                paidPrice = Double.parseDouble(paidprice);
+                unitCar.setBoughtCost(paidPrice);
+
+                System.out.println(unitCar.getAutoName());
+                System.out.println(unitCar.getBoughtCost());
+            }
+
+            else /** If its a truck **/ {
+
+                System.out.println("I'm a truck");
+
+                unitTruck.setAutoName((jListArea.getValueAt(index, 0).toString()));
+                paidprice = ((jListArea.getValueAt(index, 1).toString()));
+                paidPrice = Double.parseDouble(paidprice);
+                unitTruck.setBoughtCost(paidPrice);
+
+                System.out.println(unitCar.getAutoName());
+                System.out.println(unitCar.getBoughtCost());
+
+                //unit = unitTruck;
+            }
+
+            //Original line of code
             Auto unit = DList.remove(index);
+
+            if(check == jListArea.getValueAt(index, 4) ) unit = unitCar;
+            else unit = unitTruck;
+
+
 
             //Gets to here before error
             SoldOnDialog dialog = new SoldOnDialog(this, unit);
