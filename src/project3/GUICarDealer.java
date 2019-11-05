@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.GregorianCalendar;
 
 /*****************************************************************
@@ -83,13 +86,23 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         Object comp = e.getSource();
 
-        if (saveSerItem == comp || saveTextItem == comp) {
+        if (saveSerItem == comp) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showSaveDialog(null);
             if (status == JFileChooser.APPROVE_OPTION) {
                 String filename = chooser.getSelectedFile().getAbsolutePath();
                 if (saveSerItem == e.getSource())
                     DList.saveDatabase(filename);
+            }
+        }
+
+        if (openSerItem == comp) {
+            JFileChooser chooser = new JFileChooser();
+            int status = chooser.showOpenDialog(null);
+            if (status == JFileChooser.APPROVE_OPTION) {
+                String filename = chooser.getSelectedFile().getAbsolutePath();
+                if (openSerItem == e.getSource())
+                    DList.loadDatabase(filename);
             }
         }
 
@@ -161,17 +174,32 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
             //Gets to here before error
             SoldOnDialog dialog = new SoldOnDialog(this, unit);
-
-            //Then here when it gets cancelled
-            JOptionPane.showMessageDialog(null, " Cost:" + unit.getCost());
         }
 
         if(comp == openTextItem) {
-            // do something
+            JFileChooser chooser = new JFileChooser();
+            int status = chooser.showOpenDialog(null);
+            if (status == JFileChooser.APPROVE_OPTION) {
+                String filename = chooser.getSelectedFile().getAbsolutePath();
+                if (openTextItem == e.getSource()) {
+                    try {
+                        DList.loadFromText(filename);
+                    } catch (FileNotFoundException | ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
         }
 
         if(comp == saveTextItem) {
-            // do something
+            JFileChooser chooser = new JFileChooser();
+            int status = chooser.showSaveDialog(null);
+            if (status == JFileChooser.APPROVE_OPTION) {
+                String filename = chooser.getSelectedFile().getAbsolutePath();
+                if (saveTextItem == e.getSource()) {
+                        DList.saveAsText(filename);
+                }
+            }
         }
 
         if(comp == boughtScreenItem) {

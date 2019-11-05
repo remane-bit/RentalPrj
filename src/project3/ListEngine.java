@@ -9,6 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
+
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.Double.parseDouble;
 
 public class ListEngine extends AbstractTableModel {
 
@@ -120,9 +124,20 @@ public class ListEngine extends AbstractTableModel {
      *
      * @param filename Name of the file where the data is being loaded from
      */
-    public boolean saveAsText(String filename) {
-        return false;
+    public void saveAsText(String filename) {
+        try {
+            FileWriter fw = new FileWriter(filename);
+            BufferedWriter out = new BufferedWriter(fw);
 
+            for (int i = 0; i < listAutos.size(); i++){
+                out.write(listAutos.get(i).toString());
+                out.newLine();
+            }
+            out.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "File was not created.");
+        }
     }
 
     /*****************************************************************
@@ -133,12 +148,75 @@ public class ListEngine extends AbstractTableModel {
      *
      * @param filename Name of the file where the data is being stored in
      */
-    public void loadFromText(String filename) {
+    public void loadFromText(String filename) throws FileNotFoundException, ParseException {
         listAutos.clear();
 
+        Scanner scanner = new Scanner(new FileReader(filename));
+
+        while (scanner.hasNextLine()) {
+            String[] data = scanner.nextLine().split(",");
+
+            if (data[0].equals("Car")) {
+
+                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                GregorianCalendar temp1 = new GregorianCalendar();
+                Date d1 = df.parse(data[5]);
+
+                temp1.setTime(d1);
+                double price = parseDouble(data[4]);
+                String nameCar = data[3];
+                String trim = data[1];
+                String nameBuyer = data[6];
+                boolean turbo = parseBoolean(data[2]);
+
+                Car newCar = new Car(temp1, nameCar, price, nameBuyer, trim, turbo) {
+                    @Override
+                    public double getCost() {
+                        return 0;
+                    }
+
+                    @Override
+                    public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
+                        return 0;
+                    }
+                };
+
+                listAutos.add(newCar);
+            }
+
+            if (data[0].equals("Truck")) {
+
+                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                GregorianCalendar temp1 = new GregorianCalendar();
+                Date d1 = df.parse(data[5]);
+
+                temp1.setTime(d1);
+                double price = parseDouble(data[4]);
+                String nameCar = data[3];
+                String trim = data[1];
+                String nameBuyer = data[6];
+                boolean fourByFour = parseBoolean(data[2]);
+
+                Truck newTruck = new Truck(temp1, nameCar, price, nameBuyer, trim, fourByFour) {
+                    @Override
+                    public double getCost() {
+                        return 0;
+                    }
+
+                    @Override
+                    public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
+                        return 0;
+                    }
+                };
+
+                listAutos.add(newTruck);
+            }
+        }
+
+        fireTableDataChanged();
     }
 
-    public void createList() {
+        public void createList() {
 
         // This code has been provided to get you started on the project.
 
@@ -165,12 +243,12 @@ public class ListEngine extends AbstractTableModel {
             temp6.setTime(d6);
 
 
-            Car Car1 = new Car(temp3, "Outback", "Buyer1", "LX", false);
-            Car Car2 = new Car(temp2, "Chevy", "Buyer2", "EX", false);
-            Car Car3 = new Car(temp6, "Focus", "Buyer3", "EX", true);
-            Truck Truck1 = new Truck(temp4, "F150", "BuyerA", "LX", false);
-            Truck Truck2 = new Truck(temp1, "F250", "BuyerB", "LX", false);
-            Truck Truck3 = new Truck(temp5, "F350", "BuyerC", "EX", true);
+            Car Car1 = new Car(temp3, "Outback",14000, "Buyer1", "LX", false);
+            Car Car2 = new Car(temp2, "Chevy", 14000, "Buyer2", "EX", false);
+            Car Car3 = new Car(temp6, "Focus", 14000, "Buyer3", "EX", true);
+            Truck Truck1 = new Truck(temp4, "F150", 14000, "BuyerA", "LX", false);
+            Truck Truck2 = new Truck(temp1, "F250", 14000, "BuyerB", "LX", false);
+            Truck Truck3 = new Truck(temp5, "F350", 14000, "BuyerC", "EX", true);
 
             add(Car1);
             add(Car2);

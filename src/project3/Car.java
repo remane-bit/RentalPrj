@@ -1,5 +1,7 @@
 package project3;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 public class Car extends Auto {
@@ -14,9 +16,9 @@ public class Car extends Auto {
         return 42;
     }
 
-    public Car(GregorianCalendar boughtOn, String name,
+    public Car(GregorianCalendar boughtOn, String name, double boughtCost,
                String nameOfBuyer, String trim, boolean turbo) {
-        super(boughtOn, name, nameOfBuyer);
+        super(boughtOn, name, boughtCost, nameOfBuyer);
         this.trim = trim;
         this.turbo = turbo;
     }
@@ -31,7 +33,7 @@ public class Car extends Auto {
 
     @Override
     public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
-        return this.boughtCost - SoldCost;
+        return SoldCost - this.boughtCost;
     }
 
     public boolean isTurbo() {
@@ -44,10 +46,7 @@ public class Car extends Auto {
 
     @Override
     public String toString() {
-        return "Car    " +
-                "trim='" + trim + '\'' +  "    " +
-                ", turbo=" + turbo + "    " +
-                ", autoName='" + autoName + '\'' + "    " +
-                ' ';
+        DateFormat dfo = new SimpleDateFormat("MM/dd/yyyy");
+        return "Car, " + trim + ", " + turbo + ", " + autoName + ", " + boughtCost + ", " + dfo.format(this.boughtOn.getTime()) + ", " + nameOfBuyer;
     }
 }
