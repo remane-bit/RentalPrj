@@ -51,8 +51,11 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
         txtTrimPackage = new JTextField("LT",15);
         txtCost = new JTextField("10100.00", 15);
 
-        // Change Me
-        txtDate.setText("10/17/2018");
+        Date date = GregorianCalendar.getInstance().getTime();
+        SimpleDateFormat dateF = new SimpleDateFormat("MM/dd/yyyy");
+        String todayDate = dateF.format(date);
+
+        txtDate.setText(todayDate);
 
         truckPanel.setLayout(new GridLayout(7,2));
 
@@ -91,13 +94,13 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
      **************************************************************/
     public void actionPerformed(ActionEvent e) {
 
-        //JButton button = (JButton) e.getSource();
         Object source = e.getSource();
 
         // if OK clicked the fill the object
         if (source == okButton) {
             // save the information in the object
             closeStatus = OK;
+
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
 
@@ -114,7 +117,7 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
                 auto.setBoughtOn(temp);
                 auto.setAutoName(txtTruckName.getText());
                 auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
-                ((Truck) auto).setTrim(txtTrimPackage.getText());
+                auto.setTrim(txtTrimPackage.getText());
 
                 if (txtFourbyFour.getText().equalsIgnoreCase("true"))
                     ((Truck) auto).setFourByFour(true);

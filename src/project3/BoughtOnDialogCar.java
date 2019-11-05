@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,7 +52,14 @@ public class BoughtOnDialogCar extends JDialog implements ActionListener {
         txtCost = new JTextField("10100.00", 15);
         txtTurbo = new JTextField("Turbo", 15);
 
-        txtDate.setText("10/17/2018");
+        Date date = GregorianCalendar.getInstance().getTime();
+        SimpleDateFormat dateF = new SimpleDateFormat("MM/dd/yyyy");
+        String todayDate = dateF.format(date);
+
+
+        txtDate.setText(todayDate);
+
+
 
         carPanel.setLayout(new GridLayout(7,2));
 
@@ -99,9 +107,11 @@ public class BoughtOnDialogCar extends JDialog implements ActionListener {
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
 
-
-                Date d = null;
+            //Date d = GregorianCalendar.getInstance().getTime();
+            Date d = null;
+           // d = GregorianCalendar.getInstance().getTime();
                 try {
+                    //d = GregorianCalendar.getInstance().getTime();
                     d = df.parse(txtDate.getText());
                     temp.setTime(d);
 
@@ -110,7 +120,7 @@ public class BoughtOnDialogCar extends JDialog implements ActionListener {
                 }
                 auto.setBoughtOn(temp);
                 auto.setAutoName(txtCarName.getText());
-                ((Car) auto).setTrim(txtTrimPackage.getText());
+                auto.setTrim(txtTrimPackage.getText());
                 auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
 
 

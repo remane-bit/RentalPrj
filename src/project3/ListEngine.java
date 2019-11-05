@@ -72,19 +72,18 @@ public class ListEngine extends AbstractTableModel {
                 return (listAutos.get(row).getTrim());
 
             case 4:
-            case 5:
                 if (listAutos.get(row) instanceof Truck)
-                    if (col == 4)
-                        return (((Truck) listAutos.get(row)).isFourByFour());
-                    else
-                        return "";
+                    return (((Truck) listAutos.get(row)).isFourByFour());
+                else
+                    return "";
 
-                else {
-                    if (col == 5)
-                        return (((Car) listAutos.get(row)).isTurbo());
-                    else
-                        return "";
-                }
+            case 5:
+                if (listAutos.get(row) instanceof Car)
+                    return (((Car) listAutos.get(row)).isTurbo());
+                else
+                    return "";
+
+
             default:
                 throw new RuntimeException("JTable row,col out of range: " + row + " " + col);
         }
