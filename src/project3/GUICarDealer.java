@@ -156,13 +156,11 @@ public class GUICarDealer extends JFrame implements ActionListener{
         }
 
         if(comp == openTextItem) {
-            //Do something
-            ;
+            // do something
         }
 
         if(comp == saveTextItem) {
-            //Do something
-            ;
+            // do something
         }
 
         if(comp == boughtScreenItem) {

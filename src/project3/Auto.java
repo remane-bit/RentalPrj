@@ -84,4 +84,6 @@ public abstract class Auto implements Serializable {
     public void setTrim(String trim) {
         this.trim = trim;
     }
+
+    public abstract double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost);
 }

@@ -36,7 +36,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         super(parent, true);
 
         this.auto = auto;
-        setTitle("Sold to dialog box");
+        setTitle("Sold Car or Truck");
         closeStatus = CANCEL;
         setSize(400,200);
 
@@ -102,6 +102,11 @@ public class SoldOnDialog extends JDialog implements ActionListener {
             auto.setSoldOn(temp);
             auto.setSoldPrice(Double.parseDouble(txtCost.getText()));
             auto.setAutoName(txtVehicleSold.getText());
+
+            double finalSoldDifference = auto.getSoldBoughtCost(temp, auto.getSoldPrice());
+
+            JOptionPane.showMessageDialog(this, "For the salesman: Be sure to thank " + txtName.getText()
+                    + " for the " + txtVehicleSold.getText() + ", the price difference was " + finalSoldDifference + ".");
         }
         // make the dialog disappear
         dispose();

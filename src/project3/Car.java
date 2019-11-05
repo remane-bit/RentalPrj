@@ -29,6 +29,11 @@ public class Car extends Auto {
         this.trim = trim;
     }
 
+    @Override
+    public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
+        return this.boughtCost - SoldCost;
+    }
+
     public boolean isTurbo() {
         return turbo;
     }
