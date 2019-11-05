@@ -248,7 +248,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         panel = new JPanel();
         //Add in list engine and other things
-       // add(button);
         add(panel, BorderLayout.CENTER);
 
         setVisible(true);
@@ -261,7 +260,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         panel = new JPanel();
         //Add in list engine and other things
-        //add(button);
         add(panel, BorderLayout.CENTER);
 
         setVisible(true);
