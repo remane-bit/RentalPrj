@@ -6,10 +6,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Double.parseDouble;
@@ -39,7 +36,12 @@ public class ListEngine extends AbstractTableModel {
 
     public void add(Auto a) {
         listAutos.add(a);
+        sortDate();
         fireTableDataChanged();
+    }
+
+    public void sortDate() {
+        listAutos.sort(Comparator.comparing(auto -> auto.getBoughtOn().getTime()));
     }
 
     public Auto get(int i) {
