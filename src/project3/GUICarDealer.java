@@ -37,7 +37,12 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
     /** Holds the list engine */
     private ListEngine DList;
+    private ListEngineSold DListSold;
+    private ListEngineOverDue DListOverDue;
     private JPanel panel;
+
+    /** Variable to hold current view */
+    private int currentView;
 
     /** Holds JListArea */
     private JTable jListArea;
@@ -73,7 +78,21 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
        // button = new JButton("test");
 
+        panel = new JPanel();
+        DList = new ListEngine();
+        DListSold = new ListEngineSold();
+        DListOverDue = new ListEngineOverDue();
+
         boughtScreen();
+        menuBar();
+    }
+
+    public void menuItemViewChecker () {
+        if (currentView != 0) {
+            boughtCarItem.setEnabled(false);
+            boughtTruckItem.setEnabled(false);
+            soldItem.setEnabled(false);
+        }
     }
 
     /*****************************************************************
@@ -205,35 +224,27 @@ public class GUICarDealer extends JFrame implements ActionListener{
         if(comp == boughtScreenItem) {
             panel.removeAll();
             boughtScreen();
-
-
-
         }
 
         if(comp == soldScreenItem) {
             //Do something
             panel.removeAll();
             soldScreen();
-
         }
 
         if(comp == daysOverDueItem) {
             //Do something
             panel.removeAll();
             daysOverDueScreen();
-
         }
 
     }
 
     public void boughtScreen() {
-
-        menuBar();
-
-        panel = new JPanel();
+       currentView = 0;
+       menuItemViewChecker();
 
         /** This is where list is being made **/
-        DList = new ListEngine();
         jListArea = new JTable(DList);
         JScrollPane scrollList = new JScrollPane(jListArea);
         scrollList.setPreferredSize(new Dimension(800,300));
@@ -241,32 +252,39 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         add(panel, BorderLayout.CENTER);
 
-        setVisible(true);
+        panel.revalidate();
+        panel.repaint();
+
         setSize(950,450);
+        setVisible(true);
     }
 
     public void soldScreen() {
-        menuBar();
+        currentView = 1;
+        menuItemViewChecker();
 
-        panel = new JPanel();
-        //Add in list engine and other things
+        jListArea = new JTable(DListSold);
+        JScrollPane scrollList = new JScrollPane(jListArea);
+        scrollList.setPreferredSize(new Dimension(800,300));
+        panel.add(scrollList);
         add(panel, BorderLayout.CENTER);
 
         setVisible(true);
         setSize(950,450);
-        setVisible(true);
     }
 
     public void daysOverDueScreen() {
-        menuBar();
+        currentView = 2;
+        menuItemViewChecker();
 
-        panel = new JPanel();
-        //Add in list engine and other things
+        jListArea = new JTable(DListOverDue);
+        JScrollPane scrollList = new JScrollPane(jListArea);
+        scrollList.setPreferredSize(new Dimension(800,300));
+        panel.add(scrollList);
         add(panel, BorderLayout.CENTER);
 
         setVisible(true);
         setSize(950,450);
-        setVisible(true);
     }
 
 
