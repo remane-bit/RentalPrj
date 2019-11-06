@@ -21,7 +21,6 @@ public class ListEngineOverDue extends AbstractTableModel {
     @Override
     public String getColumnName(int col) {
         //This method is being used somewhere, but I'm not sure where
-        System.out.println("Test! ListEngineOverDue has been accessed!");
         return columnNamesOverdue[col];
     }
 
@@ -78,9 +77,9 @@ public class ListEngineOverDue extends AbstractTableModel {
                 return (listOverDueAutos.get(rowIndex).getBoughtCost());
 
             case 2:
-//                return (DateFormat.getDateInstance(DateFormat.SHORT)
-//                        .format(listOverDueAutos.get(rowIndex).getBoughtOn().getTime()));
-                ;
+                return (DateFormat.getDateInstance(DateFormat.SHORT)
+                        .format(listOverDueAutos.get(rowIndex).getBoughtOn().getTime()));
+
 
             case 3: //Days overdue; so the amount of days between the day it was bought and now
                 //This should work now

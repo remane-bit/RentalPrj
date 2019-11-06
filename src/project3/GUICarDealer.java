@@ -127,18 +127,16 @@ public class GUICarDealer extends JFrame implements ActionListener{
                 System.out.println("Days between " + difference);
 
                 if(test1 == jListArea.getValueAt(i, 4) ) {
-
+                    testCar = DList.get(i);
                     testCar.setDaysBetween(difference);
-                    testCar = DListOverDue.get(i);
                     DListOverDue.add(testCar);
-
                 }
+
                 else {
+                    testTruck = DList.get(i);
                     testTruck.setDaysBetween(difference);
-                    testTruck = DListOverDue.get(i);
                     DListOverDue.add(testTruck);
                 }
-
 
 
             }
