@@ -53,6 +53,16 @@ public class ListEngine extends AbstractTableModel {
         return listAutos.size();
     }
 
+
+    //Currently working on this
+//    public int calculateDays() {
+//        return daysBetween(listAutos.);
+//    }
+//
+//    public int daysBetween(Date d1, Date d2) {
+//        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+//    }
+
     @Override
     public int getRowCount() {
         return listAutos.size();
@@ -219,6 +229,17 @@ public class ListEngine extends AbstractTableModel {
 
         fireTableDataChanged();
     }
+
+//    public int calculateDays() {
+//
+//
+//        return daysBetween(bought date, todays date);
+//    }
+//
+//    public int daysBetween(Date d1, Date d2) {
+//        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+//    }
+
 
         public void createList() {
 

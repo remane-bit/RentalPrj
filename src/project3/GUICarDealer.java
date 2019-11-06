@@ -87,7 +87,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         menuBar();
         boughtScreen();
-        //menuBar();
     }
 
     public void menuItemViewChecker () {
@@ -147,6 +146,9 @@ public class GUICarDealer extends JFrame implements ActionListener{
             if(dialog.getCloseStatus() == BoughtOnDialogTruck.OK){
                 DList.add(auto);
             }
+
+            //Add a method to check how many days between now and the day it was purchased?
+
         }
 
         if (comp == soldItem) {
@@ -230,16 +232,19 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         if(comp == boughtScreenItem) {
             panel.removeAll();
+            System.out.println("Entering the bought screen");
             boughtScreen();
         }
 
         if(comp == soldScreenItem) {
             panel.removeAll();
+            System.out.println("Entering the sold screen");
             soldScreen();
         }
 
         if(comp == daysOverDueItem) {
             panel.removeAll();
+            System.out.println("Entering the overdue screen");
             daysOverDueScreen();
         }
 
@@ -268,6 +273,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         currentView = 1;
         menuItemViewChecker();
 
+
         jListArea2 = new JTable(DListSold);
         JScrollPane scrollList2 = new JScrollPane(jListArea2);
         scrollList2.setPreferredSize(new Dimension(800,300));
@@ -276,11 +282,14 @@ public class GUICarDealer extends JFrame implements ActionListener{
         add(panel, BorderLayout.CENTER);
 
 
-//        panel.revalidate();
-//        panel.repaint();
+        panel.revalidate();
+        panel.repaint();
 
         setVisible(true);
         setSize(950,450);
+
+
+        System.out.println("Sold Screen created!");
     }
 
     public void daysOverDueScreen() {
@@ -291,10 +300,17 @@ public class GUICarDealer extends JFrame implements ActionListener{
         JScrollPane scrollList3 = new JScrollPane(jListArea3);
         scrollList3.setPreferredSize(new Dimension(800,300));
         panel.add(scrollList3);
+
         add(panel, BorderLayout.CENTER);
+
+        panel.revalidate();
+        panel.repaint();
 
         setVisible(true);
         setSize(950,450);
+
+
+        System.out.println("Overdue Screen created!");
     }
 
 

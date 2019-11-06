@@ -86,5 +86,14 @@ public abstract class Auto implements Serializable {
         this.trim = trim;
     }
 
+//    public int calculateDays() {
+//        daysBetween();
+//        return 0;
+//    }
+//
+//    public int daysBetween(Date d1, Date d2) {
+//
+//    }
+
     public abstract double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost);
 }
