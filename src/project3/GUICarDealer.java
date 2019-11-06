@@ -83,8 +83,9 @@ public class GUICarDealer extends JFrame implements ActionListener{
         DListSold = new ListEngineSold();
         DListOverDue = new ListEngineOverDue();
 
-        boughtScreen();
         menuBar();
+        boughtScreen();
+        //menuBar();
     }
 
     public void menuItemViewChecker () {
@@ -183,20 +184,20 @@ public class GUICarDealer extends JFrame implements ActionListener{
                             System.out.println(unitTruck.getAutoName());
                             System.out.println(unitTruck.getBoughtCost());
 
-                            //unit = unitTruck;
                         }
 
             //Original line of code
             Auto unit;
-
-            //Does not get removed
-//            DList.remove(unit);
-
             if(check == jListArea.getValueAt(index, 4) ) unit = unitCar;
             else unit = unitTruck;
 //            DList.remove(index);
-            SoldOnDialog dialog = new SoldOnDialog(this, unit);
+           // SoldOnDialog dialog;
+            new SoldOnDialog(this, unit);
             DList.remove(index);
+
+            //Adds the sold vehicle to the sold list
+            DListSold.add(unit);
+
         }
 
         if(comp == openTextItem) {
@@ -335,6 +336,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
     public static void main(String[] args) {
         new GUICarDealer();
+
     }
 }
 

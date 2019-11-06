@@ -98,7 +98,6 @@ public class BoughtOnDialogCar extends JDialog implements ActionListener {
         //JButton button = (JButton) e.getSource();
         Object source = e.getSource();
 
-       // System.out.println(combobox.getSelectedIndex());
 
         // if OK clicked the fill the object
         if (source == okButton) {

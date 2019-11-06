@@ -108,19 +108,15 @@ public class SoldOnDialog extends JDialog implements ActionListener {
 //                  Do some thing good, what I am not sure.
             }
 
-            System.out.println(txtName.getText());
-            System.out.println(temp);
-            System.out.println(Double.parseDouble(txtCost.getText()));
-            System.out.println(txtVehicleSold.getText());
+//            System.out.println(txtName.getText());
+//            System.out.println(temp);
+//            System.out.println(Double.parseDouble(txtCost.getText()));
+//            System.out.println(txtVehicleSold.getText());
 
             auto.setNameOfBuyer(txtName.getText());
-            System.out.println("Test");
             auto.setSoldOn(temp);
-            System.out.println("Test");
             auto.setSoldPrice(Double.parseDouble(txtCost.getText()));
-            System.out.println("Test");
             auto.setAutoName(txtVehicleSold.getText());
-            System.out.println("Test");
 
             double finalSoldDifference = auto.getSoldBoughtCost(temp, auto.getSoldPrice());
 
