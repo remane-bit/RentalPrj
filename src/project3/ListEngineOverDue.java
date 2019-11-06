@@ -40,11 +40,14 @@ public class ListEngineOverDue extends AbstractTableModel {
 
     public void add(Auto a) {
         listOverDueAutos.add(a);
+        sortDaysOverDue();
         fireTableDataChanged();
     }
 
-    public void sortDate() {
-        listOverDueAutos.sort(Comparator.comparing(auto -> auto.getBoughtOn().getTime()));
+    /** THIS IS OUR SORTING FUNCTION */
+    public void sortDaysOverDue() {
+        listOverDueAutos.sort(Comparator.comparing(Auto::getDaysBetween));
+        Collections.reverse(listOverDueAutos);
     }
 
     public Auto get(int i) {

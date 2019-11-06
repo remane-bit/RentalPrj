@@ -41,11 +41,13 @@ public class ListEngineSold extends AbstractTableModel {
 
     public void add(Auto a) {
         listSoldAutos.add(a);
+        sortByNames();
         fireTableRowsInserted(0, 9);
     }
 
-    public void sortDate() {
-        listSoldAutos.sort(Comparator.comparing(auto -> auto.getBoughtOn().getTime()));
+    /** THIS IS OUR GENERIC SORTING FUNCTION */
+    public void sortByNames() {
+        listSoldAutos.sort(Comparator.comparing(Auto::getNameOfBuyer));
     }
 
     public Auto get(int i) {
