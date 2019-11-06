@@ -40,7 +40,7 @@ public class ListEngineOverDue extends AbstractTableModel {
 
     public void add(Auto a) {
         listOverDueAutos.add(a);
-        //sortDate();
+        sortDate();
         fireTableDataChanged();
     }
 

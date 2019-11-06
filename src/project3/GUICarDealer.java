@@ -231,6 +231,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
         menuBar();
 
         panel = new JPanel();
+
+        /** This is where list is being made **/
         DList = new ListEngine();
         jListArea = new JTable(DList);
         JScrollPane scrollList = new JScrollPane(jListArea);

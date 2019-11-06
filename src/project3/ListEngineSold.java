@@ -41,7 +41,7 @@ public class ListEngineSold extends AbstractTableModel {
 
     public void add(Auto a) {
         listSoldAutos.add(a);
-        //sortDate();
+        sortDate();
         fireTableDataChanged();
     }
 
