@@ -41,11 +41,13 @@ public class ListEngineSold extends AbstractTableModel {
 
     public void add(Auto a) {
         listSoldAutos.add(a);
-        fireTableRowsInserted(0, 9);
+        sortByNames();
+        fireTableDataChanged();
     }
 
-    public void sortDate() {
-        listSoldAutos.sort(Comparator.comparing(auto -> auto.getBoughtOn().getTime()));
+    /** THIS IS OUR GENERIC SORTING FUNCTION */
+    public void sortByNames() {
+        listSoldAutos.sort(Comparator.comparing(Auto::getNameOfBuyer));
     }
 
     public Auto get(int i) {
@@ -77,8 +79,8 @@ public class ListEngineSold extends AbstractTableModel {
                 return (listSoldAutos.get(rowIndex).getBoughtCost());
 
             case 2:
-                return (DateFormat.getDateInstance(DateFormat.SHORT)
-                        .format(listSoldAutos.get(rowIndex).getBoughtOn().getTime()));
+                //return (DateFormat.getDateInstance(DateFormat.SHORT)
+                        //.format(listSoldAutos.get(rowIndex).getBoughtOn().getTime()));
 
             case 3: //Buyers Name
                 return (listSoldAutos.get(rowIndex).getNameOfBuyer());

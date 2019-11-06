@@ -6,6 +6,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Boolean.parseBoolean;
@@ -42,8 +43,10 @@ public class ListEngine extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /** THIS IS OUR LAMBDA SORTING FUNCTION */
     public void sortDate() {
-        listAutos.sort(Comparator.comparing(auto -> auto.getBoughtOn().getTime()));
+        listAutos.sort((auto1, auto2) -> (auto1.getBoughtOn().getTime())
+                .compareTo(auto2.getBoughtOn().getTime()));
     }
 
     public Auto get(int i) {
@@ -162,7 +165,7 @@ public class ListEngine extends AbstractTableModel {
     /*****************************************************************
      * The following code is half baked code. It should help you
      * understand how to load to a text file.  THis code does NOT
-     * function correctyly but, should give you a great start to
+     * function correctly but, should give you a great start to
      * your code.
      *
      * @param filename Name of the file where the data is being stored in

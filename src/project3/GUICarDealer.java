@@ -241,13 +241,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
             new SoldOnDialog(this, unit);
 
             //Adds the sold vehicle to the sold list
-            if(check == jListArea.getValueAt(index, 4) ) {
-                DListSold.add(unitCar);
-                System.out.println("Car Added To Sold Window");
-            } else {
-                DListSold.add(unitTruck);
-                System.out.println("Truck Added To Sold Window");
-            }
+            DListSold.add(unit);
+
 
             DList.remove(index);
 
