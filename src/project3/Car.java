@@ -13,6 +13,7 @@ public class Car extends Auto {
     }
 
     public double getCost() {
+        //FIXME
         return 42;
     }
 

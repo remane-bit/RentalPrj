@@ -14,25 +14,47 @@ import static java.lang.Double.parseDouble;
 public class ListEngine extends AbstractTableModel {
 
     private ArrayList<Auto> listAutos;
+//    private ArrayList<Auto> listSoldAutos;
+//    private ArrayList<Auto> listOverDueAutos;
 
     private String[] columnNamesBought = {"Auto Name", "Bought Cost",
             "Bought Date", "Trim Package ", "Four by Four", "Turbo"};
 
+//    private String[] columnNamesSold = {"Auto Name", "Bought Cost", "Bought Date",
+//                                        "Buyer's Name" , "Sold For", "Sold On"};
+//
+//    private String[] columnNamesOverdue = {"Auto Name", "Bought Cost", "Bought Date",
+//                                            "Day's OverDue"};
+
     @Override
     public String getColumnName(int col) {
+        //This method is being used somewhere, but I'm not sure where
+        System.out.println("Test!");
         return columnNamesBought[col];
     }
+//
+//    public String getColumnNameSold(int col) {
+//        return columnNamesSold[col];
+//    }
+//
+//    public String getColumnNamesOverdue(int col) {
+//        return columnNamesOverdue[col];
+//    }
 
     public ListEngine() {
         super();
         listAutos = new ArrayList<Auto>();
         createList();
+//        listSoldAutos = new ArrayList<Auto>();
+//        listOverDueAutos = new ArrayList<Auto>();
     }
 
     public void remove(int i) {
         listAutos.remove(i);
         fireTableDataChanged();
     }
+
+    //public void
 
     public void add(Auto a) {
         listAutos.add(a);
