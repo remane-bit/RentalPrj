@@ -41,13 +41,11 @@ public class ListEngineSold extends AbstractTableModel {
 
     public void add(Auto a) {
         listSoldAutos.add(a);
-        sortByNames();
-        fireTableDataChanged();
+        fireTableRowsInserted(0, 9);
     }
 
-    /** THIS IS OUR GENERIC SORTING FUNCTION */
-    public void sortByNames() {
-        listSoldAutos.sort(Comparator.comparing(Auto::getNameOfBuyer));
+    public void sortDate() {
+        listSoldAutos.sort(Comparator.comparing(auto -> auto.getBoughtOn().getTime()));
     }
 
     public Auto get(int i) {
@@ -70,30 +68,33 @@ public class ListEngineSold extends AbstractTableModel {
     }
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
+    public Object getValueAt(int row, int columnIndex) {
+
         switch (columnIndex) {
             case 0:
-                return (listSoldAutos.get(rowIndex).getAutoName());
+                return (listSoldAutos.get(row).getAutoName());
 
             case 1:
-                return (listSoldAutos.get(rowIndex).getBoughtCost());
+                return (listSoldAutos.get(row).getBoughtCost());
 
             case 2:
-                //return (DateFormat.getDateInstance(DateFormat.SHORT)
-                        //.format(listSoldAutos.get(rowIndex).getBoughtOn().getTime()));
+                return ((DateFormat.getDateInstance(DateFormat.SHORT).format(listSoldAutos.get(row).getBoughtOn().getTime())));
 
             case 3: //Buyers Name
-                return (listSoldAutos.get(rowIndex).getNameOfBuyer());
+                return (listSoldAutos.get(row).getNameOfBuyer());
 
             case 4: // Sold for
-                return (listSoldAutos.get(rowIndex).getSoldPrice());
+                return (listSoldAutos.get(row).getSoldPrice());
 
             case 5: // Sold date
-                return (listSoldAutos.get(rowIndex).getSoldOn());
+
+                /** The problem does not lie here, but instead lies somewhere where the date isn't being formatted properly **/
+
+                return ((DateFormat.getDateInstance(DateFormat.SHORT).format(listSoldAutos.get(row).getSoldOn().getTime())));
 
 
             default:
-                throw new RuntimeException("JTable row,col out of range: " + rowIndex + " " + columnIndex);
+                throw new RuntimeException("JTable row,col out of range: " + row + " " + columnIndex);
         }
     }
 
@@ -246,12 +247,14 @@ public class ListEngineSold extends AbstractTableModel {
             Truck2.setSoldOn(temp6);
             Truck3.setSoldOn(temp6);
 
-            Car1.setNameOfBuyer("Joe");
-            Car2.setNameOfBuyer("Joe");
-            Car3.setNameOfBuyer("Joe");
-            Truck1.setNameOfBuyer("Joe");
-            Truck2.setNameOfBuyer("Joe");
-            Truck3.setNameOfBuyer("Joe");
+            System.out.println("DATE IS " + temp6);
+
+//            Car1.setNameOfBuyer("Joe");
+//            Car2.setNameOfBuyer("Joe");
+//            Car3.setNameOfBuyer("Joe");
+//            Truck1.setNameOfBuyer("Joe");
+//            Truck2.setNameOfBuyer("Joe");
+//            Truck3.setNameOfBuyer("Joe");
 
             Car1.setSoldPrice(20000.0);
             Car2.setSoldPrice(20000.0);

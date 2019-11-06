@@ -28,7 +28,7 @@ public class ListEngineOverDue extends AbstractTableModel {
     public ListEngineOverDue() {
         super();
         listOverDueAutos = new ArrayList<Auto>();
-        createList();
+        //createList();
     }
 
     public void remove(int i) {
@@ -40,14 +40,11 @@ public class ListEngineOverDue extends AbstractTableModel {
 
     public void add(Auto a) {
         listOverDueAutos.add(a);
-        sortDaysOverDue();
         fireTableDataChanged();
     }
 
-    /** THIS IS OUR SORTING FUNCTION */
-    public void sortDaysOverDue() {
-        listOverDueAutos.sort(Comparator.comparing(Auto::getDaysBetween));
-        Collections.reverse(listOverDueAutos);
+    public void sortDate() {
+        listOverDueAutos.sort(Comparator.comparing(auto -> auto.getBoughtOn().getTime()));
     }
 
     public Auto get(int i) {
@@ -78,8 +75,9 @@ public class ListEngineOverDue extends AbstractTableModel {
                 return (listOverDueAutos.get(rowIndex).getBoughtCost());
 
             case 2:
-                return (DateFormat.getDateInstance(DateFormat.SHORT)
-                        .format(listOverDueAutos.get(rowIndex).getBoughtOn().getTime()));
+//                return (DateFormat.getDateInstance(DateFormat.SHORT)
+//                        .format(listOverDueAutos.get(rowIndex).getBoughtOn().getTime()));
+                ;
 
             case 3: //Days overdue; so the amount of days between the day it was bought and now
                 //This should work now

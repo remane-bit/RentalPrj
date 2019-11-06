@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
@@ -98,20 +99,56 @@ public class GUICarDealer extends JFrame implements ActionListener{
         int sizeofList = DList.getSize();
         int i = 0;
         String test;
-        long difference = 0;
+        int difference = 0;
         Date d1;
+
+        Auto testTruck = new Truck();
+        Auto testCar = new Car();
+
+        Object test1 = "";
+
+        double paidPrice1 = 0.0;
+        String paidprice1 = "";
 
 
         while(i < sizeofList) {
-            System.out.println(DList.getValueAt(i, 2));
+//            System.out.println(DList.getValueAt(i, 2));
+
             test = DList.getValueAt(i, 2).toString();
             d1 = dateF.parse(test);
             difference = daysBetween(date, d1);
-            System.out.println("Days between " + difference);
+//            System.out.println("Days between " + difference);
             //DList.setValueAt();
 
             //Not sure about this. This sets the days between in that DlistOverDue,
-            if(difference >= 90){ DListOverDue.setValueAt(difference, i, 3); }
+            if(difference >= 90){
+
+                System.out.println(DList.getValueAt(i, 2));
+                System.out.println("Days between " + difference);
+
+                if(test1 == jListArea.getValueAt(i, 4) ) {
+                    testCar.setAutoName((jListArea.getValueAt(i, 0).toString()));
+                    paidprice1 = ((jListArea.getValueAt(i, 1).toString()));
+                    paidPrice1 = Double.parseDouble(paidprice1);
+                    testCar.setBoughtCost(paidPrice1);
+                    testCar.setDaysBetween(difference);
+
+                    DListOverDue.add(testCar);
+
+                }
+                else {
+                    testTruck.setAutoName((jListArea.getValueAt(i, 0).toString()));
+                    paidprice1 = ((jListArea.getValueAt(i, 1).toString()));
+                    paidPrice1 = Double.parseDouble(paidprice1);
+                    testTruck.setBoughtCost(paidPrice1);
+                    testTruck.setDaysBetween(difference);
+
+                    DListOverDue.add(testTruck);
+                }
+
+
+
+            }
 
             i++;
         }
@@ -204,6 +241,9 @@ public class GUICarDealer extends JFrame implements ActionListener{
             Auto unitCar = new Car();
             double paidPrice = 0.0;
             String paidprice = "";
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            GregorianCalendar temp = new GregorianCalendar();
+            String date = "";
 
                         if(check == jListArea.getValueAt(index, 4) ) {
 
@@ -213,6 +253,15 @@ public class GUICarDealer extends JFrame implements ActionListener{
                             paidprice = ((jListArea.getValueAt(index, 1).toString()));
                             paidPrice = Double.parseDouble(paidprice);
                             unitCar.setBoughtCost(paidPrice);
+//
+//                            Date date = df.parse((jListArea.getValueAt(index, 2));
+//
+//                            Calendar cal = GregorianCalendar.getInstance();
+//                            cal.setTime(date);
+//
+//                            unitCar.setBoughtOn((GregorianCalendar) cal);
+                            //temp = (jListArea.getValueAt(index, 2));
+                            unitCar.setBoughtOn(temp);
 
                             System.out.println(unitCar.getAutoName());
                             System.out.println(unitCar.getBoughtCost());
@@ -241,9 +290,32 @@ public class GUICarDealer extends JFrame implements ActionListener{
             new SoldOnDialog(this, unit);
 
             //Adds the sold vehicle to the sold list
-            DListSold.add(unit);
+            if(check == jListArea.getValueAt(index, 4) ) {
+//                //unitCar.setSoldOn();
+//                unitCar.setBoughtOn(Date.valueOf(DList.getValueAt(index, 2)));
 
 
+
+                DListSold.add(unitCar);
+                System.out.println("Vehicle Object Tests: ");
+                System.out.println(unitCar.getBoughtOn() + "\n" + unitCar.getAutoName() + "\n" + unitCar.getBoughtCost() + "\n" + unitCar.getNameOfBuyer() + "\n" + unitCar.getSoldOn() + "\n" + unitCar.getSoldPrice());
+
+
+                System.out.println("Car Added To Sold Window");
+                System.out.println("In the GUI"+ unitCar.getSoldOn());
+            } else {
+               // unitTruck.setSoldOn();
+                DListSold.add(unitTruck);
+
+
+                System.out.println("Vehicle Object Tests: ");
+                System.out.println(unitTruck.getBoughtOn() + "\n" + unitTruck.getAutoName() + "\n" + unitTruck.getBoughtCost() + "\n" + unitTruck.getNameOfBuyer() + "\n" + unitTruck.getSoldOn() + "\n" + unitTruck.getSoldPrice());
+
+
+                System.out.println("Truck Added To Sold Window");
+                System.out.println("In the GUI"+unitTruck.getSoldOn());
+            }
+            System.out.println();
             DList.remove(index);
 
         }

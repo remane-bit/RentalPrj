@@ -102,6 +102,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
             Date d = null;
             try {
                 d = df.parse(txtDate.getText());
+                System.out.println("d is equal to:" + d);
                 temp.setTime(d);
 
             } catch (ParseException e1) {
@@ -114,7 +115,12 @@ public class SoldOnDialog extends JDialog implements ActionListener {
 //            System.out.println(txtVehicleSold.getText());
 
             auto.setNameOfBuyer(txtName.getText());
+
+            //The day the auto is being sold on
             auto.setSoldOn(temp);
+
+
+            System.out.println("Within the Sold On Dialog"+d);
             auto.setSoldPrice(Double.parseDouble(txtCost.getText()));
             auto.setAutoName(txtVehicleSold.getText());
 
