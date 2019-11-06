@@ -242,30 +242,15 @@ public class GUICarDealer extends JFrame implements ActionListener{
             double paidPrice = 0.0;
             String paidprice = "";
 
+                        /** If its a car **/
                         if(check == jListArea.getValueAt(index, 4) ) {
-
                             System.out.println("I'm a car");
-
-                            unitCar.setAutoName((jListArea.getValueAt(index, 0).toString()));
-                            paidprice = ((jListArea.getValueAt(index, 1).toString()));
-                            paidPrice = Double.parseDouble(paidprice);
-                            unitCar.setBoughtCost(paidPrice);
-
-                            System.out.println(unitCar.getAutoName());
-                            System.out.println(unitCar.getBoughtCost());
+                            unitCar = DList.get(index);
                         }
 
                         else /** If its a truck **/ {
-
                             System.out.println("I'm a truck");
-
-                            unitTruck.setAutoName((jListArea.getValueAt(index, 0).toString()));
-                            paidprice = ((jListArea.getValueAt(index, 1).toString()));
-                            paidPrice = Double.parseDouble(paidprice);
-                            unitTruck.setBoughtCost(paidPrice);
-
-                            System.out.println(unitTruck.getAutoName());
-                            System.out.println(unitTruck.getBoughtCost());
+                            unitTruck = DList.get(index);
 
                         }
 
