@@ -46,6 +46,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
     /** Holds JListArea */
     private JTable jListArea;
+    private JTable jListArea2;
+    private JTable jListArea3;
 
     /** Scroll pane */
     //private JScrollPane scrollList;
@@ -266,16 +268,16 @@ public class GUICarDealer extends JFrame implements ActionListener{
         currentView = 1;
         menuItemViewChecker();
 
-        jListArea = new JTable(DListSold);
-        JScrollPane scrollList = new JScrollPane(jListArea);
-        scrollList.setPreferredSize(new Dimension(800,300));
-        panel.add(scrollList);
+        jListArea2 = new JTable(DListSold);
+        JScrollPane scrollList2 = new JScrollPane(jListArea2);
+        scrollList2.setPreferredSize(new Dimension(800,300));
+        panel.add(scrollList2);
 
         add(panel, BorderLayout.CENTER);
 
 
-        panel.revalidate();
-        panel.repaint();
+//        panel.revalidate();
+//        panel.repaint();
 
         setVisible(true);
         setSize(950,450);
@@ -285,10 +287,10 @@ public class GUICarDealer extends JFrame implements ActionListener{
         currentView = 2;
         menuItemViewChecker();
 
-        jListArea = new JTable(DListOverDue);
-        JScrollPane scrollList = new JScrollPane(jListArea);
-        scrollList.setPreferredSize(new Dimension(800,300));
-        panel.add(scrollList);
+        jListArea3 = new JTable(DListOverDue);
+        JScrollPane scrollList3 = new JScrollPane(jListArea3);
+        scrollList3.setPreferredSize(new Dimension(800,300));
+        panel.add(scrollList3);
         add(panel, BorderLayout.CENTER);
 
         setVisible(true);
