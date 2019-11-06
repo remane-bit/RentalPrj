@@ -58,12 +58,12 @@ public class ListEngineOverDue extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return 0;
+        return listOverDueAutos.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 0;
+        return columnNamesOverdue.length;
     }
 
     @Override

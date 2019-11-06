@@ -239,10 +239,17 @@ public class GUICarDealer extends JFrame implements ActionListener{
 //            DList.remove(index);
            // SoldOnDialog dialog;
             new SoldOnDialog(this, unit);
-            DList.remove(index);
 
             //Adds the sold vehicle to the sold list
-            DListSold.add(unit);
+            if(check == jListArea.getValueAt(index, 4) ) {
+                DListSold.add(unitCar);
+                System.out.println("Car Added To Sold Window");
+            } else {
+                DListSold.add(unitTruck);
+                System.out.println("Truck Added To Sold Window");
+            }
+
+            DList.remove(index);
 
         }
 
@@ -323,13 +330,11 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         add(panel, BorderLayout.CENTER);
 
-
         panel.revalidate();
         panel.repaint();
 
-        setVisible(true);
         setSize(950,450);
-
+        setVisible(true);
 
         System.out.println("Sold Screen created!");
     }
@@ -348,9 +353,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
         panel.revalidate();
         panel.repaint();
 
-        setVisible(true);
         setSize(950,450);
-
+        setVisible(true);
 
         System.out.println("Overdue Screen created!");
     }

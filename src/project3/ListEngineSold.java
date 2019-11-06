@@ -59,12 +59,12 @@ public class ListEngineSold extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return 0;
+        return listSoldAutos.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 0;
+        return columnNamesSold.length;
     }
 
     @Override
