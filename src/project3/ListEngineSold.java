@@ -21,7 +21,7 @@ public class ListEngineSold extends AbstractTableModel {
     @Override
     public String getColumnName(int col) {
         //This method is being used somewhere, but I'm not sure where
-        System.out.println("Test!");
+        System.out.println("Test! ListEngineSold has been accessed!");
         return columnNamesSold[col];
     }
 

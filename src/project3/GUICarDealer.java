@@ -232,13 +232,11 @@ public class GUICarDealer extends JFrame implements ActionListener{
         }
 
         if(comp == soldScreenItem) {
-            //Do something
             panel.removeAll();
             soldScreen();
         }
 
         if(comp == daysOverDueItem) {
-            //Do something
             panel.removeAll();
             daysOverDueScreen();
         }
@@ -272,7 +270,12 @@ public class GUICarDealer extends JFrame implements ActionListener{
         JScrollPane scrollList = new JScrollPane(jListArea);
         scrollList.setPreferredSize(new Dimension(800,300));
         panel.add(scrollList);
+
         add(panel, BorderLayout.CENTER);
+
+
+        panel.revalidate();
+        panel.repaint();
 
         setVisible(true);
         setSize(950,450);
