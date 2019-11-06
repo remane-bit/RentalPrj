@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 public class SoldOnDialog extends JDialog implements ActionListener {
 
@@ -23,6 +24,8 @@ public class SoldOnDialog extends JDialog implements ActionListener {
     private Auto auto;
     static final int OK = 0;
     static final int CANCEL = 1;
+
+    private boolean failureFlag;
 
     /*********************************************************
      Instantiate a Custom Dialog as 'modal' and wait for the
@@ -67,7 +70,6 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         cancelButton = new JButton("Cancel");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(okButton);
-        buttonPanel.add(cancelButton);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
@@ -84,6 +86,28 @@ public class SoldOnDialog extends JDialog implements ActionListener {
 
     }
 
+    public void inputParameters() throws ParseException {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        GregorianCalendar newDate = new GregorianCalendar();
+        newDate.setTime(df.parse(txtDate.getText()));
+        newDate.setLenient(false);
+
+        GregorianCalendar date = new GregorianCalendar();
+        date.getInstance().getTime();
+
+        if (auto.getBoughtOn().getTime().after(newDate.getTime())) {
+            failureFlag = true;
+        }
+
+        if (newDate.getTime().after(date.getTime())) {
+            failureFlag = true;
+        }
+
+        if (txtDate.getText() == null || txtDate.getText().length() > 10 || txtDate.getText().matches("[0-9]+")) {
+            failureFlag = true;
+        }
+    }
+
     /**************************************************************
      Respond to either button clicks
      @param e the action event that was just fired
@@ -91,10 +115,22 @@ public class SoldOnDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         JButton button = (JButton) e.getSource();
+        failureFlag = false;
 
         // if OK clicked the fill the object
         if (button == okButton) {
             // save the information in the object
+            try {
+                inputParameters();
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+
+            if (failureFlag) {
+                JOptionPane.showMessageDialog(this, "Date was invalid, try again.");
+                return;
+            }
+
             closeStatus = OK;
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
@@ -129,6 +165,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
             JOptionPane.showMessageDialog(this, "For the salesman: Be sure to thank " + txtName.getText()
                     + " for the " + txtVehicleSold.getText() + ", the price difference was " + finalSoldDifference + ".");
         }
+
         // make the dialog disappear
         dispose();
     }
