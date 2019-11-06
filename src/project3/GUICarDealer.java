@@ -92,6 +92,10 @@ public class GUICarDealer extends JFrame implements ActionListener{
             boughtCarItem.setEnabled(false);
             boughtTruckItem.setEnabled(false);
             soldItem.setEnabled(false);
+        } else {
+            boughtCarItem.setEnabled(true);
+            boughtTruckItem.setEnabled(true);
+            soldItem.setEnabled(true);
         }
     }
 
