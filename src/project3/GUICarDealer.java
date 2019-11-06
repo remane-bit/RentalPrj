@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
@@ -241,9 +240,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
             Auto unitCar = new Car();
             double paidPrice = 0.0;
             String paidprice = "";
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            GregorianCalendar temp = new GregorianCalendar();
-            String date = "";
 
                         if(check == jListArea.getValueAt(index, 4) ) {
 
@@ -253,15 +249,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
                             paidprice = ((jListArea.getValueAt(index, 1).toString()));
                             paidPrice = Double.parseDouble(paidprice);
                             unitCar.setBoughtCost(paidPrice);
-//
-//                            Date date = df.parse((jListArea.getValueAt(index, 2));
-//
-//                            Calendar cal = GregorianCalendar.getInstance();
-//                            cal.setTime(date);
-//
-//                            unitCar.setBoughtOn((GregorianCalendar) cal);
-                            //temp = (jListArea.getValueAt(index, 2));
-                            unitCar.setBoughtOn(temp);
 
                             System.out.println(unitCar.getAutoName());
                             System.out.println(unitCar.getBoughtCost());
@@ -291,31 +278,13 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
             //Adds the sold vehicle to the sold list
             if(check == jListArea.getValueAt(index, 4) ) {
-//                //unitCar.setSoldOn();
-//                unitCar.setBoughtOn(Date.valueOf(DList.getValueAt(index, 2)));
-
-
-
                 DListSold.add(unitCar);
-                System.out.println("Vehicle Object Tests: ");
-                System.out.println(unitCar.getBoughtOn() + "\n" + unitCar.getAutoName() + "\n" + unitCar.getBoughtCost() + "\n" + unitCar.getNameOfBuyer() + "\n" + unitCar.getSoldOn() + "\n" + unitCar.getSoldPrice());
-
-
                 System.out.println("Car Added To Sold Window");
-                System.out.println("In the GUI"+ unitCar.getSoldOn());
             } else {
-               // unitTruck.setSoldOn();
                 DListSold.add(unitTruck);
-
-
-                System.out.println("Vehicle Object Tests: ");
-                System.out.println(unitTruck.getBoughtOn() + "\n" + unitTruck.getAutoName() + "\n" + unitTruck.getBoughtCost() + "\n" + unitTruck.getNameOfBuyer() + "\n" + unitTruck.getSoldOn() + "\n" + unitTruck.getSoldPrice());
-
-
                 System.out.println("Truck Added To Sold Window");
-                System.out.println("In the GUI"+unitTruck.getSoldOn());
             }
-            System.out.println();
+
             DList.remove(index);
 
         }
