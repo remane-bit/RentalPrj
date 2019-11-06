@@ -80,8 +80,8 @@ public class ListEngineOverDue extends AbstractTableModel {
                         .format(listOverDueAutos.get(rowIndex).getBoughtOn().getTime()));
 
             case 3: //Days overdue; so the amount of days between the day it was bought and now
-                //FIXME
-                return 0;
+                //This should work now
+                return (listOverDueAutos.get(rowIndex).getDaysBetween());
 
 
             default:

@@ -7,7 +7,10 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 /*****************************************************************
  *
@@ -61,7 +64,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
      * A constructor that starts a new GUI1024 for the rental store
      *
      *****************************************************************/
-    public GUICarDealer(){
+    public GUICarDealer() throws ParseException {
         //adding menu bar and menu items
         menus = new JMenuBar();
         fileMenu = new JMenu("File");
@@ -87,6 +90,45 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         menuBar();
         boughtScreen();
+
+        //Todays date
+        Date date = GregorianCalendar.getInstance().getTime();
+        SimpleDateFormat dateF = new SimpleDateFormat("MM/dd/yyyy");
+
+        int sizeofList = DList.getSize();
+        int i = 0;
+        String test;
+        long difference = 0;
+        Date d1;
+
+
+        while(i < sizeofList) {
+            System.out.println(DList.getValueAt(i, 2));
+            test = DList.getValueAt(i, 2).toString();
+            d1 = dateF.parse(test);
+            difference = daysBetween(date, d1);
+            System.out.println("Days between " + difference);
+            //DList.setValueAt();
+
+            //Not sure about this. This sets the days between in that DlistOverDue,
+            if(difference >= 90){ DListOverDue.setValueAt(difference, i, 3); }
+
+            i++;
+        }
+
+    }
+
+    public int daysBetween(Date d1, Date d2) {
+        long diffInMillies = 0;
+        long diff = 0;
+
+        //test = DList.getValueAt(i, 2).toString();
+        diffInMillies = Math.abs(d2.getTime() - d1.getTime());
+        diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        diff -= 730486;
+        int x = Math.toIntExact(diff);
+
+        return x;
     }
 
     public void menuItemViewChecker () {
@@ -355,7 +397,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         new GUICarDealer();
 
     }

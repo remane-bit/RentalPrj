@@ -13,6 +13,7 @@ public abstract class Auto implements Serializable {
     protected double boughtCost;
     protected double soldPrice;
     protected String trim;
+    protected int daysBetween;
 
     public Auto() {
     }
@@ -86,14 +87,11 @@ public abstract class Auto implements Serializable {
         this.trim = trim;
     }
 
-//    public int calculateDays() {
-//        daysBetween();
-//        return 0;
-//    }
-//
-//    public int daysBetween(Date d1, Date d2) {
-//
-//    }
+    public void setDaysBetween(int daysBetween) { this.daysBetween = daysBetween; }
+
+    public int getDaysBetween() { return daysBetween; }
+
+
 
     public abstract double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost);
 }

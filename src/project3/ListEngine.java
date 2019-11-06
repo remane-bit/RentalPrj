@@ -54,9 +54,13 @@ public class ListEngine extends AbstractTableModel {
     }
 
 
-    //Currently working on this
-//    public int calculateDays() {
-//        return daysBetween(listAutos.);
+//    //Currently working on this
+//    public int calculateDays(int row) {
+//        Date date = GregorianCalendar.getInstance().getTime();
+//        SimpleDateFormat dateF = new SimpleDateFormat("MM/dd/yyyy");
+//        String todayDate = dateF.format(date);
+//
+//        return daysBetween(     , date);
 //    }
 //
 //    public int daysBetween(Date d1, Date d2) {
