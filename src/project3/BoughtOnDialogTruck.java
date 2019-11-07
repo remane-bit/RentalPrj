@@ -142,24 +142,24 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
 
             Date d = null;
 
-                try {
-                    d = df.parse(txtDate.getText());
-                    temp.setTime(d);
+            try {
+                d = df.parse(txtDate.getText());
+                temp.setTime(d);
 
-                } catch (ParseException e1) {
-                }
+            } catch (ParseException e1) {
+            }
 
             /** Updates values of auto based on user input **/
-                auto.setBoughtOn(temp);
-                auto.setAutoName(txtTruckName.getText());
-                auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
-                auto.setTrim(txtTrimPackage.getText());
+            auto.setBoughtOn(temp);
+            auto.setAutoName(txtTruckName.getText());
+            auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
+            auto.setTrim(txtTrimPackage.getText());
 
             /** Updates values of auto based on user input **/
             if (txtFourbyFour.getText().equalsIgnoreCase("true"))
-                    ((Truck) auto).setFourByFour(true);
-                else
-                    ((Truck) auto).setFourByFour(false);
+                ((Truck) auto).setFourByFour(true);
+            else
+                ((Truck) auto).setFourByFour(false);
 
         }
 
