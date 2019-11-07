@@ -14,7 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 /************************************************
  * Description
- *
+ * Program that emulates the buying and selling of automobiles based in a list format. There are multiple screens to
+ * keep track of bought, sold, and overdue vehicles. You can save the bought screen to a text or serializable file and
+ * import them in the same manner.
  * @author Max Ziegler
  * @author Remy Merriman
  * @version Fall 2019
@@ -384,8 +386,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         setSize(950,450);
         setVisible(true);
-
-        System.out.println("Sold Screen created!");
     }
 
     /**********************************************************************
@@ -407,8 +407,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         setSize(950,450);
         setVisible(true);
-
-        System.out.println("Overdue Screen created!");
     }
 
     /**********************************************************************

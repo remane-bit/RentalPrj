@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 public class SoldOnDialog extends JDialog implements ActionListener {
 
@@ -36,23 +35,25 @@ public class SoldOnDialog extends JDialog implements ActionListener {
      *********************************************************/
 
     public SoldOnDialog(JFrame parent, Auto auto) {
-        // call parent and create a 'modal' dialog
+        /** call parent and create a 'modal' dialog **/
         super(parent, true);
 
+        /** Sets auto, title, and size **/
         this.auto = auto;
         setTitle("Sold Car or Truck");
         closeStatus = CANCEL;
         setSize(400,200);
 
-        // prevent user from closing window
+        /** Prevent user from closing window **/
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        // instantiate and display two text fields
+        /** Instantiate and display all of the text fields **/
         txtName = new JTextField("Joe",30);
         txtDate = new JTextField("10/17/2018",15);
         txtCost = new JTextField("14000.00",15);
         txtVehicleSold = new JTextField("F150", 30);
 
+        /** Create and add Jlabels to the panel **/
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new GridLayout(4,2));
         textPanel.add(new JLabel("Name of Buyer: "));
@@ -65,7 +66,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         textPanel.add(txtVehicleSold);
         getContentPane().add(textPanel, BorderLayout.CENTER);
 
-        // Instantiate and display two buttons
+        /** Instantiate and display two buttons **/
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
         JPanel buttonPanel = new JPanel();
@@ -76,16 +77,18 @@ public class SoldOnDialog extends JDialog implements ActionListener {
 
         txtVehicleSold.setText(auto.getAutoName());
 
+        /** Make new greg calendar with today's date to use to set txtDate **/
         Date date = GregorianCalendar.getInstance().getTime();
         SimpleDateFormat dateF = new SimpleDateFormat("MM/dd/yyyy");
         String todayDate = dateF.format(date);
-
         txtDate.setText(todayDate);
 
+        /** Make GUI visible **/
         setVisible(true);
 
     }
 
+    /** Checks input parameters based on what we are looking for and updates the failure flag if its incorrect **/
     public void inputParameters() throws ParseException {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         GregorianCalendar newDate = new GregorianCalendar();
@@ -95,15 +98,13 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         GregorianCalendar date = new GregorianCalendar();
         date.getInstance().getTime();
 
+        /** Checks to make sure date of sale isn't before the bought date **/
         if (auto.getBoughtOn().getTime().after(newDate.getTime())) {
             failureFlag = true;
         }
 
+        /** Checks to make sure date of sale isn't in the future **/
         if (newDate.getTime().after(date.getTime())) {
-            failureFlag = true;
-        }
-
-        if (txtDate.getText() == null || txtDate.getText().length() > 10 || txtDate.getText().matches("[0-9]+")) {
             failureFlag = true;
         }
     }
@@ -115,25 +116,28 @@ public class SoldOnDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         JButton button = (JButton) e.getSource();
+
+        /** Resets failure flag each time before checking inputs **/
         failureFlag = false;
 
-        // if OK clicked the fill the object
+        /** if OK clicked the fill the object **/
         if (button == okButton) {
-            // save the information in the object
+            /** save the information in the object **/
+            closeStatus = OK;
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            GregorianCalendar temp = new GregorianCalendar();
+
             try {
                 inputParameters();
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
 
+            /** if any of the parameters of user input tripped the flag don't update values and try again **/
             if (failureFlag) {
                 JOptionPane.showMessageDialog(this, "Date was invalid, try again.");
                 return;
             }
-
-            closeStatus = OK;
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            GregorianCalendar temp = new GregorianCalendar();
 
             Date d = null;
             try {
@@ -142,31 +146,25 @@ public class SoldOnDialog extends JDialog implements ActionListener {
                 temp.setTime(d);
 
             } catch (ParseException e1) {
-//                  Do some thing good, what I am not sure.
             }
 
-//            System.out.println(txtName.getText());
-//            System.out.println(temp);
-//            System.out.println(Double.parseDouble(txtCost.getText()));
-//            System.out.println(txtVehicleSold.getText());
-
+            /** Updates values of auto based on user input **/
             auto.setNameOfBuyer(txtName.getText());
 
-            //The day the auto is being sold on
+            /** The day the auto is being sold on **/
             auto.setSoldOn(temp);
-
-
-            System.out.println("Within the Sold On Dialog"+d);
             auto.setSoldPrice(Double.parseDouble(txtCost.getText()));
             auto.setAutoName(txtVehicleSold.getText());
 
+            /** Variable that holds the sale difference for the show message dialog**/
             double finalSoldDifference = auto.getSoldBoughtCost(temp, auto.getSoldPrice());
 
+            /** Dialog that pops up when something is sold to give the user information about it**/
             JOptionPane.showMessageDialog(this, "For the salesman: Be sure to thank " + txtName.getText()
                     + " for the " + txtVehicleSold.getText() + ", the price difference was " + finalSoldDifference + ".");
         }
 
-        // make the dialog disappear
+        /** make the dialog disappear **/
         dispose();
     }
 

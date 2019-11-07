@@ -35,47 +35,48 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
      *********************************************************/
 
     public BoughtOnDialogTruck(JFrame parent, Auto auto) {
-        // call parent and create a 'modal' dialog
+        /** call parent and create a 'modal' dialog **/
         super(parent, true);
 
+        /** Sets auto, title, and size **/
         this.auto = auto;
         setTitle("Bought Truck");
         closeStatus = CANCEL;
         setSize(400,200);
 
-        // prevent user from closing window
+        /** Prevent user from closing window **/
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        // instantiate and display two text fields
+        /** Instantiate and display all of the text fields **/
         txtTruckName = new JTextField("F150",30);
         txtDate = new JTextField(15);
         txtFourbyFour = new JTextField("True",15);
         txtTrimPackage = new JTextField("LT",15);
         txtCost = new JTextField("10100.00", 15);
 
+        /** Make new greg calendar with today's date to use to set txtDate **/
         Date date = GregorianCalendar.getInstance().getTime();
         SimpleDateFormat dateF = new SimpleDateFormat("MM/dd/yyyy");
         String todayDate = dateF.format(date);
-
         txtDate.setText(todayDate);
 
+        /** Sets layout of panel and where the panel sits **/
         truckPanel.setLayout(new GridLayout(7,2));
-
         getContentPane().add(truckPanel, BorderLayout.CENTER);
 
-        // Instantiate and display two buttons
+        /** Instantiate and display two buttons **/
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+        /** Attach buttons to action listener **/
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
-        truckPanel.removeAll();
-        truckPanel.updateUI();
-
+        /** Create and add Jlabels to the panel **/
         truckPanel.add(new JLabel("Name of Truck: "));
         truckPanel.add(txtTruckName);
         truckPanel.add(new JLabel("bought on Date: "));
@@ -87,20 +88,24 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
         truckPanel.add(new JLabel("Amount Paid for"));
         truckPanel.add(txtCost);
 
+        /** Make GUI visible **/
         setVisible (true);
     }
 
+    /** Checks input parameters based on what we are looking for and updates the failure flag if its incorrect **/
     public void inputParameters() throws ParseException {
+
+        /** New date and greg variables to use to compare to and run user inputs **/
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         GregorianCalendar newDate = new GregorianCalendar();
         newDate.setTime(df.parse(txtDate.getText()));
-
         GregorianCalendar date = new GregorianCalendar();
         date.getInstance().getTime();
 
-        if (txtDate.getText() == null || txtDate.getText().length() > 10 || txtDate.getText().matches("[0-9]+")
-                || txtDate.getText().length() < 10) {
+        /** Checks to make sure date doesn't equal null, that the length equals 10 **/
+        if (txtDate.getText() == null || txtDate.getText().length() != 10) {
             failureFlag = true;
+            return;
         }
     }
 
@@ -112,24 +117,26 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
 
         Object source = e.getSource();
 
-        // if OK clicked the fill the object
+        /** if OK clicked the fill the object **/
         if (source == okButton) {
-            // save the information in the object
+            /** save the information in the object **/
             closeStatus = OK;
-
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
 
+            /** Resets failure flag each time before checking inputs **/
             failureFlag = false;
 
+            /** Runs user inputs through the parameters method **/
             try {
                 inputParameters();
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
 
+            /** if any of the parameters of user input tripped the flag don't update values and try again **/
             if (failureFlag) {
-                JOptionPane.showMessageDialog(this, "Date was invalid, try again.");
+                JOptionPane.showMessageDialog(this, "Data was invalid, try again.");
                 return;
             }
 
@@ -140,22 +147,23 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
                     temp.setTime(d);
 
                 } catch (ParseException e1) {
-//                  Do some thing good, what I am not sure.
                 }
 
+            /** Updates values of auto based on user input **/
                 auto.setBoughtOn(temp);
                 auto.setAutoName(txtTruckName.getText());
                 auto.setBoughtCost(Double.parseDouble(txtCost.getText()));
                 auto.setTrim(txtTrimPackage.getText());
 
-                if (txtFourbyFour.getText().equalsIgnoreCase("true"))
+            /** Updates values of auto based on user input **/
+            if (txtFourbyFour.getText().equalsIgnoreCase("true"))
                     ((Truck) auto).setFourByFour(true);
                 else
                     ((Truck) auto).setFourByFour(false);
 
         }
 
-        // make the dialog disappear
+        /** make the dialog disappear **/
         dispose();
     }
 
