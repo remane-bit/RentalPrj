@@ -150,9 +150,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
             difference = daysBetween(date, d1);
             if(difference >= 90){
 
-                System.out.println(DList.getValueAt(i, 2));
-                System.out.println("Days between " + difference);
-
                 if(test1 == jListArea.getValueAt(i, 4) ) {
 
                     testCar = DList.get(i);
@@ -385,7 +382,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
         setSize(950,450);
         setVisible(true);
 
-        System.out.println("Sold Screen created!");
     }
 
     /**********************************************************************
@@ -408,7 +404,6 @@ public class GUICarDealer extends JFrame implements ActionListener{
         setSize(950,450);
         setVisible(true);
 
-        System.out.println("Overdue Screen created!");
     }
 
     /**********************************************************************

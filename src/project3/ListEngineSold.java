@@ -158,8 +158,6 @@ public class ListEngineSold extends AbstractTableModel {
             Truck2.setSoldOn(temp6);
             Truck3.setSoldOn(temp6);
 
-            System.out.println("DATE IS " + temp6);
-
             Car1.setSoldPrice(20000.0);
             Car2.setSoldPrice(20000.0);
             Car3.setSoldPrice(20000.0);
