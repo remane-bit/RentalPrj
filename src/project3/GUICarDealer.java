@@ -202,6 +202,10 @@ public class GUICarDealer extends JFrame implements ActionListener{
             }
         }
 
+        if (exitItem == comp) {
+            System.exit(1);
+        }
+
         if (openSerItem == comp) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showOpenDialog(null);
