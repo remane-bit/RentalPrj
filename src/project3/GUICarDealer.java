@@ -167,10 +167,18 @@ public class GUICarDealer extends JFrame implements ActionListener{
             boughtCarItem.setEnabled(false);
             boughtTruckItem.setEnabled(false);
             soldItem.setEnabled(false);
+            openSerItem.setEnabled(false);
+            saveSerItem.setEnabled(false);
+            openTextItem.setEnabled(false);
+            saveTextItem.setEnabled(false);
         } else {
             boughtCarItem.setEnabled(true);
             boughtTruckItem.setEnabled(true);
             soldItem.setEnabled(true);
+            openSerItem.setEnabled(true);
+            saveSerItem.setEnabled(true);
+            openTextItem.setEnabled(true);
+            saveTextItem.setEnabled(true);
         }
     }
 
@@ -246,6 +254,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
                 //diff2 = daysBetween(d3, date);
 
                 DList.add(auto);
+
+
             }
 
             //Add a method to check how many days between now and the day it was purchased?
