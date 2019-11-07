@@ -14,28 +14,44 @@ import static java.lang.Double.parseDouble;
 
 public class ListEngine extends AbstractTableModel {
 
+    /** List of vehicles in the bought screen **/
     private ArrayList<Auto> listAutos;
 
+    /** Column names **/
     private String[] columnNamesBought = {"Auto Name", "Bought Cost",
             "Bought Date", "Trim Package ", "Four by Four", "Turbo"};
 
+    /**************************************************************
+     * Column name getter
+     * @param col
+     * @return columnNamesOverdue[col]
+     **************************************************************/
     @Override
     public String getColumnName(int col) {
         //This method is being used somewhere, but I'm not sure where
         return columnNamesBought[col];
     }
 
+    /**************************************************************
+     * Constructor for the engine, creates the list of vehicles
+     **************************************************************/
     public ListEngine() {
         super();
         listAutos = new ArrayList<Auto>();
         createList();
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     public void remove(int i) {
         listAutos.remove(i);
         fireTableDataChanged();
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     public void add(Auto a) {
         listAutos.add(a);
         sortDate();
@@ -43,29 +59,47 @@ public class ListEngine extends AbstractTableModel {
     }
 
     /** THIS IS OUR LAMBDA SORTING FUNCTION */
+    /**************************************************************
+     *
+     **************************************************************/
     public void sortDate() {
         listAutos.sort((auto1, auto2) -> (auto1.getBoughtOn().getTime())
                 .compareTo(auto2.getBoughtOn().getTime()));
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     public Auto get(int i) {
         return listAutos.get(i);
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     public int getSize() {
         return listAutos.size();
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     @Override
     public int getRowCount() {
         return listAutos.size();
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     @Override
     public int getColumnCount() {
         return columnNamesBought.length;
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
@@ -101,6 +135,9 @@ public class ListEngine extends AbstractTableModel {
         }
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     public void saveDatabase(String filename) {
         try {
             FileOutputStream fos = new FileOutputStream(filename);
@@ -113,6 +150,9 @@ public class ListEngine extends AbstractTableModel {
         }
     }
 
+    /**************************************************************
+     *
+     **************************************************************/
     public void loadDatabase(String filename) {
         try {
             FileInputStream fis = new FileInputStream(filename);
@@ -127,11 +167,10 @@ public class ListEngine extends AbstractTableModel {
     }
 
     /*****************************************************************
-     * The following code is half baked code. It should help you
-     * understand how to save to a text file.
+     * Saves the data as a text file
      *
      * @param filename Name of the file where the data is being loaded from
-     */
+     *******************************************************************/
     public void saveAsText(String filename) {
         try {
             FileWriter fw = new FileWriter(filename);
@@ -149,13 +188,10 @@ public class ListEngine extends AbstractTableModel {
     }
 
     /*****************************************************************
-     * The following code is half baked code. It should help you
-     * understand how to load to a text file.  THis code does NOT
-     * function correctly but, should give you a great start to
-     * your code.
+     * Loads the data from a text file
      *
      * @param filename Name of the file where the data is being stored in
-     */
+     ********************************************************************/
     public void loadFromText(String filename) throws FileNotFoundException, ParseException {
         listAutos.clear();
 
@@ -224,20 +260,12 @@ public class ListEngine extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-//    public int calculateDays() {
-//
-//
-//        return daysBetween(bought date, todays date);
-//    }
-//
-//    public int daysBetween(Date d1, Date d2) {
-//        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
-//    }
 
-
+    /**************************************************************
+     * This method creates many auto objects for data to test and
+     * work with
+     **************************************************************/
         public void createList() {
-
-        // This code has been provided to get you started on the project.
 
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         GregorianCalendar temp1 = new GregorianCalendar();

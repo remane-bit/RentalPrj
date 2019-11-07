@@ -13,29 +13,31 @@ import static java.lang.Double.parseDouble;
 
 public class ListEngineOverDue extends AbstractTableModel {
 
+    /** List of vehicles in the 90 days overdue screen **/
     private ArrayList<Auto> listOverDueAutos;
 
+    /** Column names **/
     private String[] columnNamesOverdue = {"Auto Name", "Bought Cost", "Bought Date",
             "Day's OverDue"};
 
+    /**************************************************************
+     * Column name getter
+     * @param col
+     * @return columnNamesOverdue[col]
+     **************************************************************/
     @Override
     public String getColumnName(int col) {
-        //This method is being used somewhere, but I'm not sure where
         return columnNamesOverdue[col];
     }
 
+    /**************************************************************
+     * Constructor for the engine, creates the list of vehicles overdue
+     **************************************************************/
     public ListEngineOverDue() {
         super();
         listOverDueAutos = new ArrayList<Auto>();
-        //createList();
     }
 
-    public void remove(int i) {
-        listOverDueAutos.remove(i);
-        fireTableDataChanged();
-    }
-
-    //public void
 
     public void add(Auto a) {
         listOverDueAutos.add(a);
