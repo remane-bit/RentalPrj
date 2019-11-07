@@ -1,15 +1,9 @@
 package project3;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import java.io.*;
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.Double.parseDouble;
 
 public class ListEngineOverDue extends AbstractTableModel {
 
@@ -38,176 +32,96 @@ public class ListEngineOverDue extends AbstractTableModel {
         listOverDueAutos = new ArrayList<Auto>();
     }
 
-
+    /**************************************************************
+     * Adds a vehicle in to the ArrayList
+     * @param a
+     **************************************************************/
     public void add(Auto a) {
         listOverDueAutos.add(a);
         sortDaysOverDue();
         fireTableDataChanged();
     }
 
-    /** THIS IS OUR SORTING FUNCTION */
+    /**************************************************************
+     * Function that sorts the vehicles by the amount of days
+     * overdue
+     **************************************************************/
     public void sortDaysOverDue() {
         listOverDueAutos.sort(Comparator.comparing(Auto::getDaysBetween));
         Collections.reverse(listOverDueAutos);
     }
 
-    public Auto get(int i) {
-        return listOverDueAutos.get(i);
-    }
-
+    /**************************************************************
+     * Gets the amount of vehicles in the ArrayList
+     *
+     * @return int
+     **************************************************************/
     public int getSize() {
         return listOverDueAutos.size();
     }
 
+    /**************************************************************
+     * Removes the vehicle in the ArrayList at that index
+     *
+     * @param i
+     **************************************************************/
     public void remove(int i) {
         listOverDueAutos.remove(i);
         fireTableDataChanged();
     }
 
+    /**************************************************************
+     * This method counts the amount of rows in the created table
+     *
+     * @return int
+     **************************************************************/
     @Override
     public int getRowCount() {
         return listOverDueAutos.size();
     }
 
+    /**************************************************************
+     * This method counts the amount of columns in the created table
+     * @return int
+     **************************************************************/
     @Override
     public int getColumnCount() {
         return columnNamesOverdue.length;
     }
 
+    /**************************************************************
+     * This method will return the value stored at (row, col) in the
+     * created table. The row basically acts as the index of the
+     * ArrayList, while the col acts as the certain object the user
+     * is trying to acquire
+     *
+     * @param columnIndex
+     * @param rowIndex
+     * @return Object
+     **************************************************************/
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
+                /** The name of the vehicle **/
                 return (listOverDueAutos.get(rowIndex).getAutoName());
 
             case 1:
+                /** The amount the dealer bought the vehicle for **/
                 return (listOverDueAutos.get(rowIndex).getBoughtCost());
 
             case 2:
+                /** The date the dealer bought the vehicle **/
                 return (DateFormat.getDateInstance(DateFormat.SHORT)
                         .format(listOverDueAutos.get(rowIndex).getBoughtOn().getTime()));
 
-
-            case 3: //Days overdue; so the amount of days between the day it was bought and now
-                //This should work now
+            case 3:
+                /** The amount of days between the day it was bought and the current date **/
                 return (listOverDueAutos.get(rowIndex).getDaysBetween());
 
-
             default:
+                /** Throws default error **/
                 throw new RuntimeException("JTable row,col out of range: " + rowIndex + " " + columnIndex);
         }
     }
-
-    public void saveDatabase(String filename) {
-        try {
-            FileOutputStream fos = new FileOutputStream(filename);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(listOverDueAutos);
-            os.close();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error in saving db");
-
-        }
-    }
-
-    public void loadDatabase(String filename) {
-        try {
-            FileInputStream fis = new FileInputStream(filename);
-            ObjectInputStream is = new ObjectInputStream(fis);
-
-            listOverDueAutos = (ArrayList<Auto>) is.readObject();
-            fireTableDataChanged();
-            is.close();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error in loading db");
-        }
-    }
-
-    public void saveAsText(String filename) {
-        try {
-            FileWriter fw = new FileWriter(filename);
-            BufferedWriter out = new BufferedWriter(fw);
-
-            for (int i = 0; i < listOverDueAutos.size(); i++){
-                out.write(listOverDueAutos.get(i).toString());
-                out.newLine();
-            }
-            out.close();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "File was not created.");
-        }
-    }
-
-
-    public void loadFromText(String filename) throws FileNotFoundException, ParseException {
-        listOverDueAutos.clear();
-
-        Scanner scanner = new Scanner(new FileReader(filename));
-
-        while (scanner.hasNextLine()) {
-            String[] data = scanner.nextLine().split(",");
-
-            if (data[0].equals("Car")) {
-
-                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                GregorianCalendar temp1 = new GregorianCalendar();
-                Date d1 = df.parse(data[5]);
-
-                temp1.setTime(d1);
-                double price = parseDouble(data[4]);
-                String nameCar = data[3];
-                String trim = data[1];
-                String nameBuyer = data[6];
-                boolean turbo = parseBoolean(data[2]);
-
-                Car newCar = new Car(temp1, nameCar, price, nameBuyer, trim, turbo) {
-                    @Override
-                    public double getCost() {
-                        return 0;
-                    }
-
-                    @Override
-                    public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
-                        return 0;
-                    }
-                };
-
-                listOverDueAutos.add(newCar);
-            }
-
-            if (data[0].equals("Truck")) {
-
-                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                GregorianCalendar temp1 = new GregorianCalendar();
-                Date d1 = df.parse(data[5]);
-
-                temp1.setTime(d1);
-                double price = parseDouble(data[4]);
-                String nameCar = data[3];
-                String trim = data[1];
-                String nameBuyer = data[6];
-                boolean fourByFour = parseBoolean(data[2]);
-
-                Truck newTruck = new Truck(temp1, nameCar, price, nameBuyer, trim, fourByFour) {
-                    @Override
-                    public double getCost() {
-                        return 0;
-                    }
-
-                    @Override
-                    public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
-                        return 0;
-                    }
-                };
-
-                listOverDueAutos.add(newTruck);
-            }
-        }
-
-        fireTableDataChanged();
-    }
-
-    public void createList() {;}
-
 }

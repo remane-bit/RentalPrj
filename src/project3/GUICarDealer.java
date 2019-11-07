@@ -12,11 +12,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
-/*****************************************************************
+/************************************************
+ * Description
  *
- * Maintains the GUI for the Car Dealer
- *
- *****************************************************************/
+ * @author Max Ziegler
+ * @author Remy Merriman
+ * @version Fall 2019
+ ***************************************************/
 
 public class GUICarDealer extends JFrame implements ActionListener{
 
@@ -74,7 +76,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         boughtTruckItem = new JMenuItem("Bought Truck");
         boughtScreenItem = new JMenuItem("Bought Screen");
         soldScreenItem = new JMenuItem("Sold Screen");
-        daysOverDueItem = new JMenuItem("30 Days overDue Screen");
+        daysOverDueItem = new JMenuItem("90 Days overDue Screen");
         soldItem = new JMenuItem("Sold Car or Truck");
 
         /** Creates the panel that displays the data **/
@@ -112,6 +114,11 @@ public class GUICarDealer extends JFrame implements ActionListener{
     }
 
 
+    /**************************************************************
+     * This method adds vehicles to the 90 days overdue Arraylist
+     * if the difference between the date it was bought and today's
+     * date exceeds 90 days.
+     **************************************************************/
     public void something() throws ParseException {
         Date d1;
         int sizeofList = DList.getSize();
@@ -123,6 +130,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         Auto testCar;
         Object test1 = "";
 
+        /** If there is stuff already in the OverDue ArrayList, clear it **/
         if(sizeofOverList > 0 ) {
             int j = sizeofOverList - 1;
             while(j >= 0) {
@@ -131,7 +139,11 @@ public class GUICarDealer extends JFrame implements ActionListener{
             }
         }
 
-        /** Loop that determines how many days are between the day bought and todays date **/
+        /******************************************************************************************
+         * Loop that determines how many days are between the day bought and todays date
+         * This loop copies vehicles in the bought vehicles ArrayList to the OverDue ArrayList
+         * if they've been on the lot for more than 90 days
+         ********************************************************************************************/
         while(i < sizeofList) {
             test = DList.getValueAt(i, 2).toString();
             d1 = dateF.parse(test);
@@ -191,7 +203,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
 
         Object comp = e.getSource();
 
-
+        /** If the save file button is pressed, save the file **/
         if (saveSerItem == comp) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showSaveDialog(null);
@@ -202,10 +214,12 @@ public class GUICarDealer extends JFrame implements ActionListener{
             }
         }
 
+        /** If the exit button is pressed, close the program **/
         if (exitItem == comp) {
             System.exit(1);
         }
 
+        /** If the open file button is pressed, open a selected file  **/
         if (openSerItem == comp) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showOpenDialog(null);
@@ -216,23 +230,13 @@ public class GUICarDealer extends JFrame implements ActionListener{
             }
         }
 
-        //MenuBar options
+        /** If the bought car button is pressed, go through the process of buying a car **/
         if(comp == boughtCarItem){
             Auto auto = new Car();
             BoughtOnDialogCar dialog = new BoughtOnDialogCar(this, auto);
             if(dialog.getCloseStatus() == BoughtOnDialogCar.OK){
-                //Determine number of days between
-                int diff1 = 0;
-                Date d5 = null;
-                String Test1;
-                Test1 = auto.getBoughtOn().toString();
-
-                System.out.println("TEST TEST: "+ Test1);
-                //d5 = dateF.parse(Test1);
-
-               // diff1 = daysBetween(d5, date);
-
                 DList.add(auto);
+
                 try {
                     something();
                 } catch (ParseException ex) {
@@ -243,69 +247,54 @@ public class GUICarDealer extends JFrame implements ActionListener{
             }
         }
 
+        /** If the bought truck button is pressed, go through the process of buying a truck **/
         if(comp == boughtTruckItem){
             Auto auto = new Truck();
             BoughtOnDialogTruck dialog = new BoughtOnDialogTruck(this, auto);
             if(dialog.getCloseStatus() == BoughtOnDialogTruck.OK){
-                //Determine number of days between
-                int diff2 = 0;
-                Date d3 = null;
-                String Test2;
-                Test2 = auto.getBoughtOn().toString();
-
-                System.out.println("TEST TEST: "+ Test2);
-
-                //diff2 = daysBetween(d3, date);
-
                 DList.add(auto);
 
+                try {
+                    something();
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
 
             }
 
-            //Add a method to check how many days between now and the day it was purchased?
-
         }
 
+        /** If the sold vehicle button is pressed, go through the process of selling a vehicle **/
         if (comp == soldItem) {
-            //The selected index does work, prints out the respective row as selected.
             int index = jListArea.getSelectedRow();
-
             Object check = "";
-
-            //Create the unit to have all the details of that selected unit then remove it?
             Auto unitTruck = new Truck();
             Auto unitCar = new Car();
 
-                        /** If its a car **/
-                        if(check == jListArea.getValueAt(index, 4) ) {
-                            System.out.println("I'm a car");
-                            unitCar = DList.get(index);
-                        }
-
-                        else /** If its a truck **/ {
-                            System.out.println("I'm a truck");
-                            unitTruck = DList.get(index);
-
-                        }
+                /** If its a car **/
+                if (check == jListArea.getValueAt(index, 4)) {
+                    unitCar = DList.get(index);
+                } else /** If its a truck **/ {
+                    unitTruck = DList.get(index);
+                }
 
             Auto unit;
             if(check == jListArea.getValueAt(index, 4) ) unit = unitCar;
             else unit = unitTruck;
             new SoldOnDialog(this, unit);
 
-            //Adds the sold vehicle to the sold list
+            /** Adds the sold vehicle to the sold list **/
             if(check == jListArea.getValueAt(index, 4) ) {
                 DListSold.add(unitCar);
-                System.out.println("Car Added To Sold Window");
             } else {
                 DListSold.add(unitTruck);
-                System.out.println("Truck Added To Sold Window");
             }
 
             DList.remove(index);
 
         }
 
+        /** If the open text file button is selected, open a text file of data **/
         if(comp == openTextItem) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showOpenDialog(null);
@@ -321,6 +310,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
             }
         }
 
+        /** If the save text file button is selected, save the data to a text file **/
         if(comp == saveTextItem) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showSaveDialog(null);
@@ -332,21 +322,21 @@ public class GUICarDealer extends JFrame implements ActionListener{
             }
         }
 
+        /** If the bought screen button is pressed, clear the current screen and go to the bought one **/
         if(comp == boughtScreenItem) {
             panel.removeAll();
-            System.out.println("Entering the bought screen");
             boughtScreen();
         }
 
+        /** If the sold screen button is pressed, clear the current screen and go to the sold one **/
         if(comp == soldScreenItem) {
             panel.removeAll();
-            System.out.println("Entering the sold screen");
             soldScreen();
         }
 
+        /** If the Over Due screen button is pressed, clear the current screen and go to the Over Due one **/
         if(comp == daysOverDueItem) {
             panel.removeAll();
-            System.out.println("Entering the overdue screen");
             daysOverDueScreen();
         }
 
@@ -422,8 +412,8 @@ public class GUICarDealer extends JFrame implements ActionListener{
     }
 
     /**********************************************************************
-     *
-     *
+     * This method creates the menu bar that appears at the top of the GUI.
+     * This was made to make things more concise.
      ********************************************************************/
     public void menuBar() {
 

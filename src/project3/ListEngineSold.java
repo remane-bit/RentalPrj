@@ -1,15 +1,10 @@
 package project3;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.Double.parseDouble;
 
 public class ListEngineSold extends AbstractTableModel {
 
@@ -27,7 +22,6 @@ public class ListEngineSold extends AbstractTableModel {
      **************************************************************/
     @Override
     public String getColumnName(int col) {
-        //This method is being used somewhere, but I'm not sure where
         return columnNamesSold[col];
     }
 
@@ -41,178 +35,91 @@ public class ListEngineSold extends AbstractTableModel {
     }
 
 
+    /**************************************************************
+     * Adds a vehicle in to the ArrayList
+     * @param a
+     **************************************************************/
     public void add(Auto a) {
         listSoldAutos.add(a);
         sortByNames();
         fireTableRowsInserted(0, 9);
     }
 
-    /** THIS IS OUR GENERIC SORTING FUNCTION */
+    /**************************************************************
+     * Generic sorting function, sorts by buyer's names
+     **************************************************************/
     public void sortByNames() {
         listSoldAutos.sort(Comparator.comparing(Auto::getNameOfBuyer));
     }
 
-    public Auto get(int i) {
-        return listSoldAutos.get(i);
-    }
-
-    public int getSize() {
-        return listSoldAutos.size();
-    }
-
-
+    /**************************************************************
+     * This method counts the amount of rows in the created table
+     *
+     * @return int
+     **************************************************************/
     @Override
     public int getRowCount() {
         return listSoldAutos.size();
     }
 
+    /**************************************************************
+     * This method counts the amount of columns in the created table
+     * @return int
+     **************************************************************/
     @Override
     public int getColumnCount() {
         return columnNamesSold.length;
     }
 
+    /**************************************************************
+     * This method will return the value stored at (row, col) in the
+     * created table. The row basically acts as the index of the
+     * ArrayList, while the col acts as the certain object the user
+     * is trying to acquire
+     *
+     * @param columnIndex
+     * @param row
+     * @return Object
+     **************************************************************/
     @Override
     public Object getValueAt(int row, int columnIndex) {
 
         switch (columnIndex) {
             case 0:
+                /** Name of the vehicle **/
                 return (listSoldAutos.get(row).getAutoName());
 
             case 1:
+                /** How much the dealer paid for the vehicle **/
                 return (listSoldAutos.get(row).getBoughtCost());
 
             case 2:
+                /** The day the dealer bought the vehicle **/
                 return ((DateFormat.getDateInstance(DateFormat.SHORT).format(listSoldAutos.get(row).getBoughtOn().getTime())));
 
-            case 3: //Buyers Name
+            case 3:
+                /** The name of the person who bought the vehicle **/
                 return (listSoldAutos.get(row).getNameOfBuyer());
 
-            case 4: // Sold for
+            case 4:
+                /** The amount the dealer sold the vehicle for **/
                 return (listSoldAutos.get(row).getSoldPrice());
 
-            case 5: // Sold date
-
-                /** The problem does not lie here, but instead lies somewhere where the date isn't being formatted properly **/
-
+            case 5:
+                /** The day the dealer sold the vehicle **/
                 return ((DateFormat.getDateInstance(DateFormat.SHORT).format(listSoldAutos.get(row).getSoldOn().getTime())));
 
-
             default:
+                /** Throws default error **/
                 throw new RuntimeException("JTable row,col out of range: " + row + " " + columnIndex);
         }
     }
 
-    public void saveDatabase(String filename) {
-        try {
-            FileOutputStream fos = new FileOutputStream(filename);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(listSoldAutos);
-            os.close();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error in saving db");
-
-        }
-    }
-
-    public void loadDatabase(String filename) {
-        try {
-            FileInputStream fis = new FileInputStream(filename);
-            ObjectInputStream is = new ObjectInputStream(fis);
-
-            listSoldAutos = (ArrayList<Auto>) is.readObject();
-            fireTableDataChanged();
-            is.close();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error in loading db");
-        }
-    }
-
-    public void saveAsText(String filename) {
-        try {
-            FileWriter fw = new FileWriter(filename);
-            BufferedWriter out = new BufferedWriter(fw);
-
-            for (int i = 0; i < listSoldAutos.size(); i++){
-                out.write(listSoldAutos.get(i).toString());
-                out.newLine();
-            }
-            out.close();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "File was not created.");
-        }
-    }
-
-    public void loadFromText(String filename) throws FileNotFoundException, ParseException {
-        listSoldAutos.clear();
-
-        Scanner scanner = new Scanner(new FileReader(filename));
-
-        while (scanner.hasNextLine()) {
-            String[] data = scanner.nextLine().split(",");
-
-            if (data[0].equals("Car")) {
-
-                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                GregorianCalendar temp1 = new GregorianCalendar();
-                Date d1 = df.parse(data[5]);
-
-                temp1.setTime(d1);
-                double price = parseDouble(data[4]);
-                String nameCar = data[3];
-                String trim = data[1];
-                String nameBuyer = data[6];
-                boolean turbo = parseBoolean(data[2]);
-
-                Car newCar = new Car(temp1, nameCar, price, nameBuyer, trim, turbo) {
-                    @Override
-                    public double getCost() {
-                        return 0;
-                    }
-
-                    @Override
-                    public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
-                        return 0;
-                    }
-                };
-
-                listSoldAutos.add(newCar);
-            }
-
-            if (data[0].equals("Truck")) {
-
-                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                GregorianCalendar temp1 = new GregorianCalendar();
-                Date d1 = df.parse(data[5]);
-
-                temp1.setTime(d1);
-                double price = parseDouble(data[4]);
-                String nameCar = data[3];
-                String trim = data[1];
-                String nameBuyer = data[6];
-                boolean fourByFour = parseBoolean(data[2]);
-
-                Truck newTruck = new Truck(temp1, nameCar, price, nameBuyer, trim, fourByFour) {
-                    @Override
-                    public double getCost() {
-                        return 0;
-                    }
-
-                    @Override
-                    public double getSoldBoughtCost(GregorianCalendar SoldDate, double SoldCost) {
-                        return 0;
-                    }
-                };
-
-                listSoldAutos.add(newTruck);
-            }
-        }
-
-        fireTableDataChanged();
-    }
-
+    /**************************************************************
+     * This method creates many auto objects for data to test and
+     * work with
+     **************************************************************/
     public void createList() {
-        // This code has been provided to get you started on the project.
 
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         GregorianCalendar temp1 = new GregorianCalendar();
@@ -252,13 +159,6 @@ public class ListEngineSold extends AbstractTableModel {
             Truck3.setSoldOn(temp6);
 
             System.out.println("DATE IS " + temp6);
-
-//            Car1.setNameOfBuyer("Joe");
-//            Car2.setNameOfBuyer("Joe");
-//            Car3.setNameOfBuyer("Joe");
-//            Truck1.setNameOfBuyer("Joe");
-//            Truck2.setNameOfBuyer("Joe");
-//            Truck3.setNameOfBuyer("Joe");
 
             Car1.setSoldPrice(20000.0);
             Car2.setSoldPrice(20000.0);

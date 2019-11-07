@@ -18,8 +18,6 @@ public abstract class Auto implements Serializable {
     public Auto() {
     }
 
-    public abstract double getCost();
-
     public Auto(GregorianCalendar boughtOn, String name, double boughtCost, String nameOfBuyer) {
         this.boughtOn = boughtOn;
         this.boughtCost = boughtCost;
