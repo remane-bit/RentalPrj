@@ -90,39 +90,7 @@ public class GUICarDealer extends JFrame implements ActionListener{
         boughtScreen();
 
         /** Variables created for the while loop that determines the days between **/
-        Date d1;
-        int sizeofList = DList.getSize();
-        int i = 0;
-        String test;
-        int difference = 0;
-        Auto testTruck;
-        Auto testCar;
-        Object test1 = "";
-
-        /** Loop that determines how many days are between the day bought and todays date **/
-        while(i < sizeofList) {
-            test = DList.getValueAt(i, 2).toString();
-            d1 = dateF.parse(test);
-            difference = daysBetween(date, d1);
-            if(difference >= 90){
-
-                System.out.println(DList.getValueAt(i, 2));
-                System.out.println("Days between " + difference);
-
-                if(test1 == jListArea.getValueAt(i, 4) ) {
-                    testCar = DList.get(i);
-                    testCar.setDaysBetween(difference);
-                    DListOverDue.add(testCar);
-                }
-
-                else {
-                    testTruck = DList.get(i);
-                    testTruck.setDaysBetween(difference);
-                    DListOverDue.add(testTruck);
-                }
-            }
-            i++;
-        }
+        something();
 
     }
 
@@ -141,6 +109,53 @@ public class GUICarDealer extends JFrame implements ActionListener{
         diff -= 730486;
         int x = Math.toIntExact(diff);
         return x;
+    }
+
+
+    public void something() throws ParseException {
+        Date d1;
+        int sizeofList = DList.getSize();
+        int sizeofOverList = DListOverDue.getSize();
+        int i = 0;
+        String test;
+        int difference = 0;
+        Auto testTruck;
+        Auto testCar;
+        Object test1 = "";
+
+        if(sizeofOverList > 0 ) {
+            int j = sizeofOverList - 1;
+            while(j >= 0) {
+                DListOverDue.remove(j);
+                j--;
+            }
+        }
+
+        /** Loop that determines how many days are between the day bought and todays date **/
+        while(i < sizeofList) {
+            test = DList.getValueAt(i, 2).toString();
+            d1 = dateF.parse(test);
+            difference = daysBetween(date, d1);
+            if(difference >= 90){
+
+                System.out.println(DList.getValueAt(i, 2));
+                System.out.println("Days between " + difference);
+
+                if(test1 == jListArea.getValueAt(i, 4) ) {
+
+                    testCar = DList.get(i);
+                    testCar.setDaysBetween(difference);
+                    DListOverDue.add(testCar);
+                }
+
+                else {
+                    testTruck = DList.get(i);
+                    testTruck.setDaysBetween(difference);
+                    DListOverDue.add(testTruck);
+                }
+            }
+            i++;
+        }
     }
 
     /**********************************************************************
@@ -206,6 +221,13 @@ public class GUICarDealer extends JFrame implements ActionListener{
                // diff1 = daysBetween(d5, date);
 
                 DList.add(auto);
+                try {
+                    something();
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+
+
             }
         }
 

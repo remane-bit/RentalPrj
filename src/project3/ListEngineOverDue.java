@@ -59,6 +59,11 @@ public class ListEngineOverDue extends AbstractTableModel {
         return listOverDueAutos.size();
     }
 
+    public void remove(int i) {
+        listOverDueAutos.remove(i);
+        fireTableDataChanged();
+    }
+
     @Override
     public int getRowCount() {
         return listOverDueAutos.size();
