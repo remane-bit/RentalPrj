@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
     static final int OK = 0;
     static final int CANCEL = 1;
     JPanel truckPanel = new JPanel();
+    private boolean failureFlag;
 
     /*********************************************************
      Instantiate a Custom Dialog as 'modal' and wait for the
@@ -88,6 +90,20 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
         setVisible (true);
     }
 
+    public void inputParameters() throws ParseException {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        GregorianCalendar newDate = new GregorianCalendar();
+        newDate.setTime(df.parse(txtDate.getText()));
+
+        GregorianCalendar date = new GregorianCalendar();
+        date.getInstance().getTime();
+
+        if (txtDate.getText() == null || txtDate.getText().length() > 10 || txtDate.getText().matches("[0-9]+")
+                || txtDate.getText().length() < 10) {
+            failureFlag = true;
+        }
+    }
+
     /**************************************************************
      Respond to either button clicks
      @param e the action event that was just fired
@@ -103,6 +119,19 @@ public class BoughtOnDialogTruck extends JDialog implements ActionListener {
 
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             GregorianCalendar temp = new GregorianCalendar();
+
+            failureFlag = false;
+
+            try {
+                inputParameters();
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+
+            if (failureFlag) {
+                JOptionPane.showMessageDialog(this, "Date was invalid, try again.");
+                return;
+            }
 
             Date d = null;
 

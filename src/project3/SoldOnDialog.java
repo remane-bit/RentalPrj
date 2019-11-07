@@ -90,7 +90,7 @@ public class SoldOnDialog extends JDialog implements ActionListener {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         GregorianCalendar newDate = new GregorianCalendar();
         newDate.setTime(df.parse(txtDate.getText()));
-        newDate.setLenient(false);
+
 
         GregorianCalendar date = new GregorianCalendar();
         date.getInstance().getTime();
