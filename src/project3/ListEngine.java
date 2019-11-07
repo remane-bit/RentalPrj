@@ -30,6 +30,7 @@ public class ListEngine extends AbstractTableModel {
     public String getColumnName(int col) {
         //This method is being used somewhere, but I'm not sure where
         return columnNamesBought[col];
+        //
     }
 
     /**************************************************************
